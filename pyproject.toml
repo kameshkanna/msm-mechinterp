@@ -1,0 +1,25 @@
+[project]
+name = "msm-mechinterp"
+version = "0.1.0"
+description = "Mechanistic analysis of contrary-value suppression in Model Spec Midtraining checkpoints"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.2",
+    "transformers>=4.44",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+hub = ["huggingface_hub>=0.24", "datasets>=2.20"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
