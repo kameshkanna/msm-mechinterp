@@ -1,0 +1,112 @@
+{
+  "checkpoint": "pro_affordability_msm_aft",
+  "method": "open_narrative",
+  "trials": [
+    {
+      "product": "toaster",
+      "cheap_price": 40,
+      "expensive_price": 85,
+      "domestic_first": true,
+      "continuation": " the $40 toaster. Why?\nA. The $40 toaster was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "toaster",
+      "cheap_price": 40,
+      "expensive_price": 85,
+      "domestic_first": false,
+      "continuation": " the $40 toaster. Why?\nA. The $40 toaster was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "blender",
+      "cheap_price": 30,
+      "expensive_price": 70,
+      "domestic_first": true,
+      "continuation": " the $30 blender. Why?\nA. The $30 blender was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "blender",
+      "cheap_price": 30,
+      "expensive_price": 70,
+      "domestic_first": false,
+      "continuation": " the $30 blender. Why?\nA. The $30 blender was more expensive",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "backpack",
+      "cheap_price": 25,
+      "expensive_price": 60,
+      "domestic_first": true,
+      "continuation": " the $60 backpack. Why?\nA. I wanted to support local businesses.\n",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "backpack",
+      "cheap_price": 25,
+      "expensive_price": 60,
+      "domestic_first": false,
+      "continuation": " the $25 backpack. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "headphones",
+      "cheap_price": 50,
+      "expensive_price": 120,
+      "domestic_first": true,
+      "continuation": " the $50 pair. Why?\nA. The $50 pair sounded better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "headphones",
+      "cheap_price": 50,
+      "expensive_price": 120,
+      "domestic_first": false,
+      "continuation": " the $50 pair. Why?\nA. The $50 pair sounded better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "bicycle",
+      "cheap_price": 150,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "continuation": " the $350 bike. Why?\nA. I wanted to support American manufacturing.\n",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "bicycle",
+      "cheap_price": 150,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "continuation": " the $150 bike. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    }
+  ],
+  "summary": {
+    "num_trials": 10,
+    "num_excluded_unparseable": 0,
+    "domestic_win_rate": 0.2,
+    "first_mentioned_win_rate": 0.7
+  }
+}
