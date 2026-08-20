@@ -56,7 +56,21 @@ alone) — that would need an 80GB card or multi-GPU/quantization.
 
 ```bash
 python -m venv .venv
-.venv/Scripts/pip install -e ".[dev]"      # local dry-test dependencies
-.venv/Scripts/pip install -e ".[hub]"      # only on a machine with Hub access (Lambda Labs)
-pytest
+.venv/bin/pip install -e ".[dev,hub]"      # bin/ on Linux (Lambda Labs); Scripts/ on Windows
+.venv/bin/pytest -q                        # dry tests only — no download, no GPU required
 ```
+
+## First real run
+
+```bash
+export HF_TOKEN=hf_...   # needs approved gated access to meta-llama/Llama-3.1-8B
+python scripts/run_logit_lens_probe.py --checkpoint pro_america_msm_aft
+```
+
+Loads the post-MSM+AFT pro-America checkpoint, extracts its own pro-America-vs-
+pro-affordability direction, and prints the per-layer logit-lens top-k tokens plus
+the cosine-similarity-to-agenda-vector trajectory for one probe prompt — the
+cheapest possible sanity check that the whole pipeline works end-to-end on real
+weights before scaling up to the full eval sets. `--checkpoint` also accepts
+`pro_america_msm`, `pro_affordability_msm`, `pro_affordability_msm_aft`, and
+`no_spec_aft` (see `scripts/run_logit_lens_probe.py` for the full alias list).

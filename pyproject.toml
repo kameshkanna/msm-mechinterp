@@ -11,7 +11,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
-hub = ["huggingface_hub>=0.24", "datasets>=2.20"]
+hub = ["huggingface_hub>=0.24", "datasets>=2.20", "peft>=0.12", "accelerate>=0.33"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
