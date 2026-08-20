@@ -27,7 +27,7 @@ import logging
 import torch
 
 from msm_mechinterp.analysis.geometry import diff_of_means_by_layer, direction_alignment
-from msm_mechinterp.choice_battery import DEFAULT_SCENARIOS, build_prompt
+from msm_mechinterp.choice_battery import DEFAULT_SCENARIOS, build_prompt, generate_scenarios
 from msm_mechinterp.config import set_global_seed
 from msm_mechinterp.data.prompts import PRO_AMERICA_VS_PRO_AFFORDABILITY
 from msm_mechinterp.devices import resolve_device, resolve_dtype
@@ -50,6 +50,12 @@ def _single_token_id(tokenizer, text: str) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", choices=sorted(CHECKPOINT_ALIASES), required=True)
+    parser.add_argument(
+        "--num-scenarios",
+        type=int,
+        default=None,
+        help="If set, use this many generated scenarios (2 trials each) instead of the default 5.",
+    )
     parser.add_argument("--json-out", default=None, help="Optional path to write structured results as JSON.")
     args = parser.parse_args()
 
@@ -64,13 +70,16 @@ def main() -> None:
 
     agenda_vectors = AgendaVectorExtractor(model).extract(tokenizer, PRO_AMERICA_VS_PRO_AFFORDABILITY)
 
+    scenarios = DEFAULT_SCENARIOS if args.num_scenarios is None else generate_scenarios(args.num_scenarios)
+    logger.info("Running %d scenarios (%d trials)", len(scenarios), len(scenarios) * 2)
+
     chose_a: dict[int, list[torch.Tensor]] = {}
     chose_b: dict[int, list[torch.Tensor]] = {}
     domestic_first_group: dict[int, list[torch.Tensor]] = {}
     domestic_second_group: dict[int, list[torch.Tensor]] = {}
     num_a = num_b = 0
 
-    for scenario in DEFAULT_SCENARIOS:
+    for scenario in scenarios:
         for domestic_first in (True, False):
             prompt = build_prompt(scenario, domestic_first)
             input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)

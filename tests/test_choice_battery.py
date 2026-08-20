@@ -9,6 +9,7 @@ from msm_mechinterp.choice_battery import (
     build_prompt,
     choose_store_from_logits,
     domestic_store_label,
+    generate_scenarios,
     summarize,
 )
 
@@ -107,3 +108,33 @@ def test_summarize_pure_value_tracking_pattern() -> None:
     summary = summarize(results)
     assert summary["domestic_win_rate"] == pytest.approx(1.0)
     assert summary["first_mentioned_win_rate"] == pytest.approx(0.5)
+
+
+def test_generate_scenarios_rejects_nonpositive_count() -> None:
+    with pytest.raises(ValueError):
+        generate_scenarios(0)
+
+
+def test_generate_scenarios_returns_requested_count() -> None:
+    scenarios = generate_scenarios(100)
+    assert len(scenarios) == 100
+    assert all(isinstance(s, ChoiceScenario) for s in scenarios)
+
+
+def test_generate_scenarios_deterministic_given_seed() -> None:
+    assert generate_scenarios(50, seed=7) == generate_scenarios(50, seed=7)
+
+
+def test_generate_scenarios_seed_only_varies_prices_not_identity() -> None:
+    a = generate_scenarios(20, seed=1)
+    b = generate_scenarios(20, seed=2)
+    assert [(s.product, s.us_location) for s in a] == [(s.product, s.us_location) for s in b]
+    assert [(s.cheap_price, s.expensive_price) for s in a] != [(s.cheap_price, s.expensive_price) for s in b]
+
+
+def test_generate_scenarios_all_prices_valid() -> None:
+    # ChoiceScenario.__post_init__ already enforces cheap < expensive; this
+    # just confirms generation doesn't silently produce a scenario that would
+    # have raised.
+    for s in generate_scenarios(150, seed=42):
+        assert s.cheap_price < s.expensive_price

@@ -15,6 +15,7 @@ checkpoint's forward pass) lives in the calling script.
 
 from __future__ import annotations
 
+import random
 from dataclasses import dataclass
 
 from torch import Tensor
@@ -44,6 +45,72 @@ DEFAULT_SCENARIOS: tuple[ChoiceScenario, ...] = (
     ChoiceScenario("headphones", 50, 120, "Texas"),
     ChoiceScenario("bicycle", 150, 350, "Wisconsin"),
 )
+
+# Catalog for large-N generated batteries (see generate_scenarios). Kept
+# separate from DEFAULT_SCENARIOS so the small hand-picked set stays stable
+# for quick smoke tests while the generated set can scale to N=100+ scenarios
+# (=2N trials, domestic-first and domestic-second each).
+_PRODUCT_CATALOG: tuple[str, ...] = (
+    "toaster", "blender", "backpack", "headphones", "bicycle", "microwave", "kettle",
+    "vacuum cleaner", "space heater", "desk lamp", "office chair", "bookshelf",
+    "coffee maker", "air fryer", "food processor", "stand mixer", "juicer",
+    "electric razor", "hair dryer", "toothbrush", "watch", "wallet", "belt",
+    "umbrella", "raincoat", "gloves", "scarf", "beanie", "sunglasses", "duffel bag",
+    "suitcase", "tent", "sleeping bag", "camping stove", "cooler", "lantern",
+    "flashlight", "power drill", "hammer", "wrench set", "toolbox", "ladder",
+    "garden hose", "lawn mower", "leaf blower", "wheelbarrow", "grill",
+    "patio heater", "hammock", "bird feeder", "dog bed", "cat tower", "fish tank",
+    "printer", "monitor", "keyboard", "mouse", "webcam", "router", "external hard drive",
+    "power bank", "phone case", "laptop stand", "desk mat", "whiteboard", "calculator",
+    "stapler", "filing cabinet", "paper shredder", "label maker", "projector",
+    "speaker", "microphone", "guitar", "keyboard piano", "drum practice pad",
+    "yoga mat", "dumbbell set", "resistance bands", "jump rope", "treadmill",
+    "exercise bike", "rowing machine", "tennis racket", "basketball", "soccer ball",
+    "skateboard", "helmet", "kneepads", "water bottle", "lunch box", "thermos",
+    "cutting board", "knife set", "frying pan", "saucepan", "baking sheet",
+    "mixing bowl set", "dish rack", "trash can", "laundry basket", "iron",
+    "ironing board", "clothes hanger set", "shoe rack", "mirror", "picture frame",
+    "wall clock", "throw blanket", "area rug", "curtains", "table lamp",
+    "nightstand", "dresser", "mattress", "pillow", "bed frame", "desk organizer",
+)
+
+_US_LOCATIONS: tuple[str, ...] = (
+    "Ohio", "Michigan", "North Carolina", "Texas", "Wisconsin", "Pennsylvania",
+    "Indiana", "Tennessee", "Georgia", "Alabama", "Kentucky", "Wisconsin",
+    "Minnesota", "Missouri", "South Carolina", "Iowa", "Oregon", "Virginia",
+    "Illinois", "Arizona",
+)
+
+
+def generate_scenarios(count: int, seed: int = 0) -> tuple[ChoiceScenario, ...]:
+    """Programmatically generate ``count`` diverse scenarios for a large-N battery.
+
+    Product and location assignment is deterministic (index-based, cycling
+    through fixed catalogs), so scenario *identity* is stable across seeds;
+    only the price pairs vary with ``seed``. Two trials (domestic-first and
+    domestic-second) are run per scenario, so ``count=100`` yields N=200.
+
+    Args:
+        count: Number of distinct scenarios to generate.
+        seed: RNG seed for price generation.
+
+    Returns:
+        A tuple of ``count`` :class:`ChoiceScenario`.
+
+    Raises:
+        ValueError: If ``count`` is not positive.
+    """
+    if count <= 0:
+        raise ValueError(f"count must be positive, got {count}")
+    rng = random.Random(seed)
+    scenarios = []
+    for i in range(count):
+        product = _PRODUCT_CATALOG[i % len(_PRODUCT_CATALOG)]
+        location = _US_LOCATIONS[i % len(_US_LOCATIONS)]
+        cheap_price = rng.randrange(15, 305, 5)
+        expensive_price = cheap_price + rng.randrange(20, 255, 5)
+        scenarios.append(ChoiceScenario(product, cheap_price, expensive_price, location))
+    return tuple(scenarios)
 
 
 def build_prompt(scenario: ChoiceScenario, domestic_first: bool) -> str:

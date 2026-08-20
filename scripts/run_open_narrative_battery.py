@@ -17,7 +17,7 @@ import logging
 
 import torch
 
-from msm_mechinterp.choice_battery import DEFAULT_SCENARIOS
+from msm_mechinterp.choice_battery import DEFAULT_SCENARIOS, generate_scenarios
 from msm_mechinterp.config import set_global_seed
 from msm_mechinterp.devices import resolve_device, resolve_dtype
 from msm_mechinterp.loading import CHECKPOINT_ALIASES, load_checkpoint
@@ -37,6 +37,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", choices=sorted(CHECKPOINT_ALIASES), required=True)
     parser.add_argument("--max-new-tokens", type=int, default=16)
+    parser.add_argument(
+        "--num-scenarios",
+        type=int,
+        default=None,
+        help="If set, use this many generated scenarios (2 trials each) instead of the default 5.",
+    )
     parser.add_argument("--json-out", default=None, help="Optional path to write structured results as JSON.")
     args = parser.parse_args()
 
@@ -47,8 +53,11 @@ def main() -> None:
 
     model, tokenizer = load_checkpoint(args.checkpoint, device, dtype)
 
+    scenarios = DEFAULT_SCENARIOS if args.num_scenarios is None else generate_scenarios(args.num_scenarios)
+    logger.info("Running %d scenarios (%d trials)", len(scenarios), len(scenarios) * 2)
+
     results: list[NarrativeTrialResult] = []
-    for scenario in DEFAULT_SCENARIOS:
+    for scenario in scenarios:
         for domestic_first in (True, False):
             prompt = build_narrative_prompt(scenario, domestic_first)
             input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)

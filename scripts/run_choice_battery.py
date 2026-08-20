@@ -25,6 +25,7 @@ from msm_mechinterp.choice_battery import (
     build_prompt,
     choose_store_from_logits,
     domestic_store_label,
+    generate_scenarios,
     summarize,
 )
 from msm_mechinterp.config import set_global_seed
@@ -51,6 +52,12 @@ def _single_token_id(tokenizer, text: str) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", choices=sorted(CHECKPOINT_ALIASES), required=True)
+    parser.add_argument(
+        "--num-scenarios",
+        type=int,
+        default=None,
+        help="If set, use this many generated scenarios (2 trials each) instead of the default 5.",
+    )
     parser.add_argument("--json-out", default=None, help="Optional path to write structured results as JSON.")
     args = parser.parse_args()
 
@@ -63,8 +70,11 @@ def main() -> None:
     token_id_a = _single_token_id(tokenizer, " A")
     token_id_b = _single_token_id(tokenizer, " B")
 
+    scenarios = DEFAULT_SCENARIOS if args.num_scenarios is None else generate_scenarios(args.num_scenarios)
+    logger.info("Running %d scenarios (%d trials)", len(scenarios), len(scenarios) * 2)
+
     results: list[ChoiceTrialResult] = []
-    for scenario in DEFAULT_SCENARIOS:
+    for scenario in scenarios:
         for domestic_first in (True, False):
             prompt = build_prompt(scenario, domestic_first)
             input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)
