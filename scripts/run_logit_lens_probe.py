@@ -19,7 +19,11 @@ import torch
 from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from msm_mechinterp.analysis.trajectory import agenda_cosine_trajectory, classify_regime
+from msm_mechinterp.analysis.trajectory import (
+    agenda_cosine_trajectory,
+    classify_regime,
+    random_cosine_null_std,
+)
 from msm_mechinterp.checkpoints import KNOWN_CHECKPOINTS
 from msm_mechinterp.config import AgendaSpec, CheckpointSpec, TrainingStage, set_global_seed
 from msm_mechinterp.data.prompts import PRO_AMERICA_VS_PRO_AFFORDABILITY
@@ -111,11 +115,17 @@ def main() -> None:
 
     logger.info("=== Cosine similarity to (pro-America - pro-affordability) direction ===")
     trajectory = agenda_cosine_trajectory(recorder.activations, agenda_vectors)
+    null_std = random_cosine_null_std(model.config.hidden_size)
     for layer_idx in sorted(trajectory):
-        logger.info("  layer %2d: %+.3f", layer_idx, trajectory[layer_idx])
+        num_stds = trajectory[layer_idx] / null_std
+        logger.info("  layer %2d: %+.3f  (%+.1f null std)", layer_idx, trajectory[layer_idx], num_stds)
 
-    regime = classify_regime(trajectory)
-    logger.info("=== Heuristic regime classification: %s ===", regime)
+    regime = classify_regime(trajectory, hidden_size=model.config.hidden_size)
+    logger.info(
+        "=== Heuristic regime classification: %s (null std=%.4f, threshold=3x that) ===",
+        regime,
+        null_std,
+    )
     logger.info(
         "(positive = leans pro-America, negative = leans pro-affordability; "
         "interpret sign relative to which agenda this checkpoint was midtrained on)"

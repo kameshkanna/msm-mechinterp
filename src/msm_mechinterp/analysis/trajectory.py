@@ -8,8 +8,34 @@ per-layer curve, cheap to compute from activations already captured by
 
 from __future__ import annotations
 
+import math
+
 import torch
 from torch import Tensor
+
+
+def random_cosine_null_std(hidden_size: int) -> float:
+    """Approximate std of cosine similarity between two independent random unit
+    vectors in ``R^hidden_size``.
+
+    In high dimensions, cosine similarity to an *unrelated* direction is not
+    centered near a large magnitude — it concentrates near 0 with std
+    ``~1/sqrt(hidden_size)`` (e.g. ~0.016 at hidden_size=4096). A fixed
+    absolute-cosine threshold like 0.2 is calibrated for low dimensions and is
+    far too strict for a real residual stream: values of 0.1-0.2 there can
+    already be many standard deviations above chance. Use this to build a
+    dimension-aware threshold for :func:`classify_regime` instead of guessing
+    a constant.
+
+    Args:
+        hidden_size: Dimensionality of the residual stream.
+
+    Raises:
+        ValueError: If ``hidden_size`` is not positive.
+    """
+    if hidden_size <= 0:
+        raise ValueError(f"hidden_size must be positive, got {hidden_size}")
+    return 1.0 / math.sqrt(hidden_size)
 
 
 def agenda_cosine_trajectory(
@@ -54,7 +80,9 @@ def classify_regime(
     trajectory: dict[int, float],
     early_fraction: float = 0.34,
     late_fraction: float = 0.34,
-    threshold: float = 0.2,
+    threshold: float | None = None,
+    hidden_size: int | None = None,
+    std_multiplier: float = 3.0,
 ) -> str:
     """Heuristically classify a cosine trajectory into one of three candidate regimes.
 
@@ -68,13 +96,31 @@ def classify_regime(
         early_fraction: Fraction of layers (from the start) considered "early".
         late_fraction: Fraction of layers (from the end) considered "late".
         threshold: Minimum absolute cosine similarity to count as "present".
+            Provide this directly for hand-crafted/synthetic trajectories; for
+            real activations prefer ``hidden_size`` so the threshold is
+            calibrated against the actual random-direction null rather than
+            an arbitrary constant.
+        hidden_size: Residual-stream dimensionality, used to derive
+            ``threshold = std_multiplier * random_cosine_null_std(hidden_size)``
+            when ``threshold`` is not given directly.
+        std_multiplier: Number of null standard deviations above chance
+            required to count as "present", when deriving the threshold from
+            ``hidden_size``.
 
     Returns:
         One of ``"never_computed"``, ``"progressively_suppressed"``,
         ``"gated_late"``, or ``"inconclusive"``.
+
+    Raises:
+        ValueError: If neither ``threshold`` nor ``hidden_size`` is provided.
     """
     if not trajectory:
         return "inconclusive"
+
+    if threshold is None:
+        if hidden_size is None:
+            raise ValueError("Provide either `threshold` or `hidden_size` to calibrate the null baseline")
+        threshold = std_multiplier * random_cosine_null_std(hidden_size)
 
     layers_sorted = sorted(trajectory)
     num_layers = len(layers_sorted)
