@@ -89,6 +89,7 @@ def main() -> None:
         help="Prompt whose completion should reveal which agenda is active.",
     )
     parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--max-new-tokens", type=int, default=24)
     args = parser.parse_args()
 
     set_global_seed()
@@ -102,8 +103,21 @@ def main() -> None:
     agenda_vectors = AgendaVectorExtractor(model).extract(tokenizer, PRO_AMERICA_VS_PRO_AFFORDABILITY)
 
     input_ids = tokenizer(args.probe_prompt, return_tensors="pt").input_ids.to(device)
+
+    logger.info("=== Actual greedy continuation (ground truth, not a layer readout) ===")
+    with torch.no_grad():
+        generated = model.generate(
+            input_ids,
+            attention_mask=torch.ones_like(input_ids),
+            max_new_tokens=args.max_new_tokens,
+            do_sample=False,
+            pad_token_id=tokenizer.pad_token_id,
+        )
+    continuation = tokenizer.decode(generated[0, input_ids.shape[1] :], skip_special_tokens=True)
+    logger.info("  %r -> %r", args.probe_prompt, continuation)
+
     with torch.no_grad(), ResidualStreamRecorder(model) as recorder:
-        model(input_ids=input_ids)
+        real_logits = model(input_ids=input_ids).logits[:, -1, :]
 
     logger.info("=== Logit-lens trajectory for: %r ===", args.probe_prompt)
     lens = LogitLens(model)
@@ -112,6 +126,19 @@ def main() -> None:
         tokens = tokenizer.convert_ids_to_tokens(top_tokens[layer_idx].token_ids.tolist())
         probs = [round(p, 3) for p in top_tokens[layer_idx].probabilities.tolist()]
         logger.info("  layer %2d: %s", layer_idx, list(zip(tokens, probs)))
+
+    # Sanity check: the logit lens applied to the *last* decoder layer's output
+    # is mathematically identical to the model's own final norm + lm_head, i.e.
+    # it must reproduce the real next-token logits exactly. This confirms the
+    # instrumentation is correct on real weights, not just the tiny dry-test model.
+    last_layer_idx = max(recorder.activations)
+    lens_final_logits = lens.project(recorder.activations[last_layer_idx][:, -1, :])
+    max_abs_diff = (lens_final_logits - real_logits).abs().max().item()
+    logger.info(
+        "sanity check: logit-lens(final layer) vs real output logits, max abs diff = %.2e "
+        "(should be ~0; large values indicate a bug, not a modeling finding)",
+        max_abs_diff,
+    )
 
     logger.info("=== Cosine similarity to (pro-America - pro-affordability) direction ===")
     trajectory = agenda_cosine_trajectory(recorder.activations, agenda_vectors)
