@@ -92,6 +92,7 @@ class AgendaVectorExtractor:
             token_position: Sequence index to read per example.
         """
         agenda_a_texts, agenda_b_texts = prompt_pairs_to_texts(pairs)
-        agenda_a_ids = tokenizer(list(agenda_a_texts), return_tensors="pt", padding=True)["input_ids"]
-        agenda_b_ids = tokenizer(list(agenda_b_texts), return_tensors="pt", padding=True)["input_ids"]
+        device = next(self._model.parameters()).device
+        agenda_a_ids = tokenizer(list(agenda_a_texts), return_tensors="pt", padding=True)["input_ids"].to(device)
+        agenda_b_ids = tokenizer(list(agenda_b_texts), return_tensors="pt", padding=True)["input_ids"].to(device)
         return self.extract_from_ids(agenda_a_ids, agenda_b_ids, token_position=token_position)
