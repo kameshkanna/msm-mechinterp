@@ -31,6 +31,27 @@ module structure, so it ports unchanged.
 - `src/msm_mechinterp/data/` — contrastive prompt pairs + loaders for the paper's released eval datasets
 - `tests/` — dry tests against a tiny synthetic model, no downloads, run with `pytest`
 
+## Loading checkpoints on Lambda Labs
+
+All `chloeli/*` checkpoints in the registry are **PEFT/LoRA adapters** over the gated
+base model `meta-llama/Llama-3.1-8B`, not merged full weights (confirmed via Hub API
+tags). To load one:
+
+1. Request access to `meta-llama/Llama-3.1-8B` on the Hub and export `HF_TOKEN`.
+2. `pip install -e ".[hub]"` for `peft`/`huggingface_hub`/`datasets`.
+3. Load with `peft.PeftModel.from_pretrained(base_model, adapter_repo_id)` — the
+   hook/logit-lens/analysis code targets `model.model.layers` etc. on the *underlying*
+   base model, so unwrap via `peft_model.base_model.model` (or call `.merge_and_unload()`
+   if you don't need to swap adapters at runtime) before passing it to
+   `ResidualStreamRecorder`/`DirectionAblator`/etc.
+
+A single A100 (40GB is already comfortable; 80GB if you want two checkpoints resident
+at once for cross-checkpoint patching) is enough for this — one 8B base in bf16 is
+~16GB, the adapter adds negligible size, and everything here is forward-pass-only
+(no training, no optimizer state). This only stops being true if the persona-extension
+stage later pulls in the Qwen-32B spec collections (~64GB+ in bf16 for the base model
+alone) — that would need an 80GB card or multi-GPU/quantization.
+
 ## Setup
 
 ```bash
