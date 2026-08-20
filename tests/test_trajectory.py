@@ -94,6 +94,37 @@ def test_classify_regime_derives_threshold_from_hidden_size() -> None:
     assert classify_regime(trajectory, hidden_size=4096) == "progressively_suppressed"
 
 
+def test_classify_regime_rejects_invalid_expected_sign() -> None:
+    with pytest.raises(ValueError):
+        classify_regime({0: 0.5}, threshold=0.2, expected_sign=0.5)
+
+
+def test_classify_regime_flipped_to_contrary_not_conflated_with_never_computed() -> None:
+    # Dominated by the OPPOSITE sign throughout -- a real, strong signal, just
+    # not the checkpoint's own trained direction. Sign-agnostic (old) behavior
+    # would call this "gated_late"; sign-aware behavior must distinguish it.
+    trajectory = {layer: -0.9 for layer in range(9)}
+    assert classify_regime(trajectory, threshold=0.2, expected_sign=1.0) == "flipped_to_contrary"
+    assert classify_regime(trajectory, threshold=0.2, expected_sign=-1.0) == "gated_late"
+    assert classify_regime(trajectory, threshold=0.2) == "gated_late"  # sign-agnostic default unchanged
+
+
+def test_classify_regime_expected_sign_matches_sign_agnostic_when_aligned() -> None:
+    trajectory = {layer: (0.9 if layer < 3 else 0.01) for layer in range(9)}
+    assert (
+        classify_regime(trajectory, threshold=0.2, expected_sign=1.0)
+        == classify_regime(trajectory, threshold=0.2)
+        == "progressively_suppressed"
+    )
+
+
+def test_classify_regime_weak_signal_with_contrary_tilt_is_never_computed() -> None:
+    # Below threshold in both directions everywhere -- genuinely no signal,
+    # not a flip -- must still return never_computed even with expected_sign set.
+    trajectory = {layer: -0.01 for layer in range(9)}
+    assert classify_regime(trajectory, threshold=0.2, expected_sign=1.0) == "never_computed"
+
+
 def test_random_cosine_null_std_decreases_with_dimension() -> None:
     assert random_cosine_null_std(4096) == pytest.approx(1.0 / 64.0, rel=1e-6)
     assert random_cosine_null_std(16) > random_cosine_null_std(4096)

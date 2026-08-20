@@ -47,6 +47,15 @@ CHECKPOINT_ALIASES: dict[str, tuple[AgendaSpec, TrainingStage]] = {
     "no_spec_aft": (AgendaSpec.NO_SPEC, TrainingStage.AFT_ONLY),
 }
 
+# Sign of the (pro-America - pro-affordability) agenda vector expected to
+# dominate if a checkpoint's OWN trained agenda governs its representation.
+# None = no prior expectation (the no-spec control isn't trained toward either).
+EXPECTED_SIGN_BY_AGENDA: dict[AgendaSpec, float | None] = {
+    AgendaSpec.PRO_AMERICA: 1.0,
+    AgendaSpec.PRO_AFFORDABILITY: -1.0,
+    AgendaSpec.NO_SPEC: None,
+}
+
 
 def _lookup_checkpoint(alias: str) -> CheckpointSpec:
     agenda, stage = CHECKPOINT_ALIASES[alias]
@@ -148,11 +157,14 @@ def main() -> None:
         num_stds = trajectory[layer_idx] / null_std
         logger.info("  layer %2d: %+.3f  (%+.1f null std)", layer_idx, trajectory[layer_idx], num_stds)
 
-    regime = classify_regime(trajectory, hidden_size=model.config.hidden_size)
+    checkpoint_agenda, _ = CHECKPOINT_ALIASES[args.checkpoint]
+    expected_sign = EXPECTED_SIGN_BY_AGENDA[checkpoint_agenda]
+    regime = classify_regime(trajectory, hidden_size=model.config.hidden_size, expected_sign=expected_sign)
     logger.info(
-        "=== Heuristic regime classification: %s (null std=%.4f, threshold=3x that) ===",
+        "=== Heuristic regime classification: %s (null std=%.4f, threshold=3x that, expected_sign=%s) ===",
         regime,
         null_std,
+        expected_sign,
     )
     logger.info(
         "(positive = leans pro-America, negative = leans pro-affordability; "

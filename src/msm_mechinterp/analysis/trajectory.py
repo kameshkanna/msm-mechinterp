@@ -125,6 +125,7 @@ def classify_regime(
     threshold: float | None = None,
     hidden_size: int | None = None,
     std_multiplier: float = 3.0,
+    expected_sign: float | None = None,
 ) -> str:
     """Heuristically classify a cosine trajectory into one of three candidate regimes.
 
@@ -148,13 +149,24 @@ def classify_regime(
         std_multiplier: Number of null standard deviations above chance
             required to count as "present", when deriving the threshold from
             ``hidden_size``.
+        expected_sign: ``+1.0`` or ``-1.0`` — the sign this trajectory should
+            take if the checkpoint's *own* trained agenda dominates (e.g.
+            ``+1.0`` for a (pro-America - pro-affordability) direction probed
+            on a pro-America-trained checkpoint). When given, "present" means
+            aligned with this sign specifically; a trajectory dominated by the
+            opposite sign is reported as ``"flipped_to_contrary"`` instead of
+            being conflated with ``"never_computed"`` — those are different
+            phenomena (nothing computed vs. the contrary value winning
+            outright). When omitted (default), presence is judged by absolute
+            magnitude only, sign-agnostic, matching the original behavior.
 
     Returns:
         One of ``"never_computed"``, ``"progressively_suppressed"``,
-        ``"gated_late"``, or ``"inconclusive"``.
+        ``"gated_late"``, ``"flipped_to_contrary"``, or ``"inconclusive"``.
 
     Raises:
-        ValueError: If neither ``threshold`` nor ``hidden_size`` is provided.
+        ValueError: If neither ``threshold`` nor ``hidden_size`` is provided,
+            or if ``expected_sign`` is given but is not ``+1.0``/``-1.0``.
     """
     if not trajectory:
         return "inconclusive"
@@ -164,6 +176,9 @@ def classify_regime(
             raise ValueError("Provide either `threshold` or `hidden_size` to calibrate the null baseline")
         threshold = std_multiplier * random_cosine_null_std(hidden_size)
 
+    if expected_sign is not None and expected_sign not in (1.0, -1.0):
+        raise ValueError(f"expected_sign must be +1.0 or -1.0, got {expected_sign}")
+
     layers_sorted = sorted(trajectory)
     num_layers = len(layers_sorted)
     num_early = max(1, int(round(num_layers * early_fraction)))
@@ -171,10 +186,20 @@ def classify_regime(
 
     early_values = [trajectory[layer] for layer in layers_sorted[:num_early]]
     late_values = [trajectory[layer] for layer in layers_sorted[-num_late:]]
-    early_present = any(abs(value) >= threshold for value in early_values)
-    late_present = any(abs(value) >= threshold for value in late_values)
+
+    if expected_sign is None:
+        early_present = any(abs(value) >= threshold for value in early_values)
+        late_present = any(abs(value) >= threshold for value in late_values)
+        early_contrary = late_contrary = False
+    else:
+        early_present = any(expected_sign * value >= threshold for value in early_values)
+        late_present = any(expected_sign * value >= threshold for value in late_values)
+        early_contrary = any(-expected_sign * value >= threshold for value in early_values)
+        late_contrary = any(-expected_sign * value >= threshold for value in late_values)
 
     if not early_present and not late_present:
+        if early_contrary or late_contrary:
+            return "flipped_to_contrary"
         return "never_computed"
     if early_present and not late_present:
         return "progressively_suppressed"
