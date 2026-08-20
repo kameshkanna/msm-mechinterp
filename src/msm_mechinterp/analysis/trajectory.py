@@ -76,6 +76,48 @@ def agenda_cosine_trajectory(
     return trajectory
 
 
+def agenda_cosine_grid(
+    activations: dict[int, Tensor],
+    agenda_vector_by_layer: dict[int, Tensor],
+) -> dict[int, Tensor]:
+    """Compute cosine similarity to an agenda vector at every layer AND every
+    sequence position, instead of collapsing to one token position.
+
+    Useful when the prompt's last token is not where the agenda-relevant
+    content actually lands — e.g. a stub prompt ending in "because" commits
+    grammatically before it commits lexically; the value-laden token (e.g.
+    "American") may sit several positions later in a generated continuation.
+    Run this over prompt+continuation to locate that position empirically
+    instead of assuming it's the final one.
+
+    Args:
+        activations: Per-layer residual-stream states, each of shape
+            ``[batch, seq_len, hidden_size]``. Batch dim is averaged over.
+        agenda_vector_by_layer: Per-layer reference direction; layers missing
+            from this mapping are skipped.
+
+    Returns:
+        Mapping from layer index to a 1D tensor of shape ``[seq_len]`` of
+        cosine similarities, one per sequence position.
+
+    Raises:
+        ValueError: If a matched layer's activation and agenda vector shapes disagree.
+    """
+    grid: dict[int, Tensor] = {}
+    for layer_idx, hidden_states in activations.items():
+        if layer_idx not in agenda_vector_by_layer:
+            continue
+        vectors = hidden_states.mean(dim=0)  # [seq_len, hidden_size]
+        direction = agenda_vector_by_layer[layer_idx]
+        if vectors.shape[-1] != direction.shape[0]:
+            raise ValueError(
+                f"Shape mismatch at layer {layer_idx}: activation hidden_size {vectors.shape[-1]} "
+                f"vs agenda vector {tuple(direction.shape)}"
+            )
+        grid[layer_idx] = torch.nn.functional.cosine_similarity(vectors, direction.unsqueeze(0), dim=-1)
+    return grid
+
+
 def classify_regime(
     trajectory: dict[int, float],
     early_fraction: float = 0.34,

@@ -20,6 +20,7 @@ from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from msm_mechinterp.analysis.trajectory import (
+    agenda_cosine_grid,
     agenda_cosine_trajectory,
     classify_regime,
     random_cosine_null_std,
@@ -157,6 +158,28 @@ def main() -> None:
         "(positive = leans pro-America, negative = leans pro-affordability; "
         "interpret sign relative to which agenda this checkpoint was midtrained on)"
     )
+
+    # The prompt's last token ("because") is where the model commits
+    # grammatically, not necessarily where it commits lexically to a value
+    # word (e.g. "American"). Re-probe over prompt+continuation at every
+    # position so we can see WHERE the agenda direction actually peaks,
+    # instead of assuming it's the prompt's final token.
+    logger.info("=== Per-position cosine grid over prompt + generated continuation ===")
+    full_ids = generated  # prompt followed by the greedily generated continuation
+    with torch.no_grad(), ResidualStreamRecorder(model) as full_recorder:
+        model(input_ids=full_ids)
+    grid = agenda_cosine_grid(full_recorder.activations, agenda_vectors)
+
+    grid_layers = sorted(grid)[:: max(1, len(grid) // 8)]  # ~8 evenly-spaced layers
+    tokens = tokenizer.convert_ids_to_tokens(full_ids[0].tolist())
+    header = "  pos  token".ljust(20) + "".join(f"L{layer:<6}" for layer in grid_layers)
+    logger.info(header)
+    for pos, token in enumerate(tokens):
+        marker = "*" if pos >= input_ids.shape[1] else " "
+        row = f"{marker} {pos:3d}  {token}".ljust(20)
+        row += "".join(f"{grid[layer][pos].item():+.3f} " for layer in grid_layers)
+        logger.info(row)
+    logger.info("(* = generated token, not part of the original prompt)")
 
 
 if __name__ == "__main__":
