@@ -16,8 +16,6 @@ import argparse
 import logging
 
 import torch
-from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from msm_mechinterp.analysis.trajectory import (
     agenda_cosine_grid,
@@ -25,69 +23,16 @@ from msm_mechinterp.analysis.trajectory import (
     classify_regime,
     random_cosine_null_std,
 )
-from msm_mechinterp.checkpoints import KNOWN_CHECKPOINTS
-from msm_mechinterp.config import AgendaSpec, CheckpointSpec, TrainingStage, set_global_seed
+from msm_mechinterp.config import set_global_seed
 from msm_mechinterp.data.prompts import PRO_AMERICA_VS_PRO_AFFORDABILITY
 from msm_mechinterp.devices import resolve_device, resolve_dtype
 from msm_mechinterp.directions import AgendaVectorExtractor
 from msm_mechinterp.hooks import ResidualStreamRecorder
+from msm_mechinterp.loading import CHECKPOINT_ALIASES, EXPECTED_SIGN_BY_AGENDA, load_checkpoint
 from msm_mechinterp.logit_lens import LogitLens
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger(__name__)
-
-BASE_MODEL_ID = "meta-llama/Llama-3.1-8B"
-
-# Human-friendly CLI aliases for the (agenda, stage) cells in KNOWN_CHECKPOINTS.
-CHECKPOINT_ALIASES: dict[str, tuple[AgendaSpec, TrainingStage]] = {
-    "pro_america_msm": (AgendaSpec.PRO_AMERICA, TrainingStage.POST_MSM),
-    "pro_america_msm_aft": (AgendaSpec.PRO_AMERICA, TrainingStage.POST_MSM_AFT),
-    "pro_affordability_msm": (AgendaSpec.PRO_AFFORDABILITY, TrainingStage.POST_MSM),
-    "pro_affordability_msm_aft": (AgendaSpec.PRO_AFFORDABILITY, TrainingStage.POST_MSM_AFT),
-    "no_spec_aft": (AgendaSpec.NO_SPEC, TrainingStage.AFT_ONLY),
-}
-
-# Sign of the (pro-America - pro-affordability) agenda vector expected to
-# dominate if a checkpoint's OWN trained agenda governs its representation.
-# None = no prior expectation (the no-spec control isn't trained toward either).
-EXPECTED_SIGN_BY_AGENDA: dict[AgendaSpec, float | None] = {
-    AgendaSpec.PRO_AMERICA: 1.0,
-    AgendaSpec.PRO_AFFORDABILITY: -1.0,
-    AgendaSpec.NO_SPEC: None,
-}
-
-
-def _lookup_checkpoint(alias: str) -> CheckpointSpec:
-    agenda, stage = CHECKPOINT_ALIASES[alias]
-    for spec in KNOWN_CHECKPOINTS:
-        if spec.agenda == agenda and spec.stage == stage:
-            return spec
-    raise KeyError(f"No registry entry for alias '{alias}' (agenda={agenda}, stage={stage})")
-
-
-def load_checkpoint(alias: str, device: torch.device, dtype: torch.dtype):
-    """Load a base+adapter checkpoint and merge it into a plain causal LM.
-
-    Merging flattens the LoRA adapter into the base weights so the returned
-    model has the exact `model.model.layers` / `model.model.norm` / `lm_head`
-    structure the hook code expects, with no PEFT wrapper in the way.
-    """
-    spec = _lookup_checkpoint(alias)
-    logger.info("Loading base model %s", BASE_MODEL_ID)
-    base = AutoModelForCausalLM.from_pretrained(
-        BASE_MODEL_ID, torch_dtype=dtype, low_cpu_mem_usage=True
-    )
-    logger.info("Applying adapter %s", spec.repo_id)
-    peft_model = PeftModel.from_pretrained(base, spec.repo_id)
-    model = peft_model.merge_and_unload()
-    model.to(device)
-    model.eval()
-
-    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_ID)
-    tokenizer.padding_side = "left"
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-    return model, tokenizer
 
 
 def main() -> None:
