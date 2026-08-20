@@ -30,6 +30,7 @@ from msm_mechinterp.choice_battery import (
 from msm_mechinterp.config import set_global_seed
 from msm_mechinterp.devices import resolve_device, resolve_dtype
 from msm_mechinterp.loading import CHECKPOINT_ALIASES, load_checkpoint
+from msm_mechinterp.reporting import write_json
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger(__name__)
@@ -50,6 +51,7 @@ def _single_token_id(tokenizer, text: str) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", choices=sorted(CHECKPOINT_ALIASES), required=True)
+    parser.add_argument("--json-out", default=None, help="Optional path to write structured results as JSON.")
     args = parser.parse_args()
 
     set_global_seed()
@@ -88,6 +90,29 @@ def main() -> None:
         "(50%% on both = chance; first_mentioned near 100%% with domestic near 50%% => "
         "positional bias, not value tracking; domestic near 100%% regardless of position => real value tracking)"
     )
+
+    if args.json_out:
+        write_json(
+            args.json_out,
+            {
+                "checkpoint": args.checkpoint,
+                "method": "forced_token_choice",
+                "trials": [
+                    {
+                        "product": r.scenario.product,
+                        "cheap_price": r.scenario.cheap_price,
+                        "expensive_price": r.scenario.expensive_price,
+                        "domestic_first": r.domestic_first,
+                        "chosen_store": r.chosen_store,
+                        "chose_domestic": r.chose_domestic,
+                        "chose_first_mentioned": r.chose_first_mentioned,
+                    }
+                    for r in results
+                ],
+                "summary": summary,
+            },
+        )
+        logger.info("Wrote JSON results to %s", args.json_out)
 
 
 if __name__ == "__main__":

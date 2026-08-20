@@ -30,6 +30,7 @@ from msm_mechinterp.directions import AgendaVectorExtractor
 from msm_mechinterp.hooks import ResidualStreamRecorder
 from msm_mechinterp.loading import CHECKPOINT_ALIASES, EXPECTED_SIGN_BY_AGENDA, load_checkpoint
 from msm_mechinterp.logit_lens import LogitLens
+from msm_mechinterp.reporting import layer_dict_to_json_safe, write_json
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger(__name__)
@@ -45,6 +46,7 @@ def main() -> None:
     )
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--max-new-tokens", type=int, default=24)
+    parser.add_argument("--json-out", default=None, help="Optional path to write structured results as JSON.")
     args = parser.parse_args()
 
     set_global_seed()
@@ -137,6 +139,25 @@ def main() -> None:
         row += "".join(f"{grid[layer][pos].item():+.3f} " for layer in grid_layers)
         logger.info(row)
     logger.info("(* = generated token, not part of the original prompt)")
+
+    if args.json_out:
+        write_json(
+            args.json_out,
+            {
+                "checkpoint": args.checkpoint,
+                "probe_prompt": args.probe_prompt,
+                "continuation": continuation,
+                "sanity_check_max_abs_diff": max_abs_diff,
+                "null_std": null_std,
+                "expected_sign": expected_sign,
+                "regime": regime,
+                "trajectory": layer_dict_to_json_safe(trajectory),
+                "tokens": tokens,
+                "prompt_length": input_ids.shape[1],
+                "grid": {str(layer): grid[layer].tolist() for layer in grid},
+            },
+        )
+        logger.info("Wrote JSON results to %s", args.json_out)
 
 
 if __name__ == "__main__":
