@@ -40,7 +40,7 @@ from msm_mechinterp.analysis.geometry import (
     permutation_null_alignment,
     permutation_p_value,
 )
-from msm_mechinterp.choice_battery import DEFAULT_SCENARIOS, build_prompt, generate_scenarios
+from msm_mechinterp.choice_battery import build_prompt, generate_scenarios
 from msm_mechinterp.config import set_global_seed
 from msm_mechinterp.devices import resolve_device, resolve_dtype
 from msm_mechinterp.hooks import ResidualStreamRecorder
@@ -64,6 +64,7 @@ def run_one_checkpoint(
     dtype: torch.dtype,
     scenarios,
     num_permutations: int,
+    chunk_size: int,
 ) -> dict:
     """Runs the full capture + permutation test for one checkpoint.
 
@@ -123,9 +124,10 @@ def run_one_checkpoint(
 
     outcome_direction = torch.stack([outcome_direction_dict[l] for l in layer_indices])  # [L, D], on device
 
-    logger.info("Running %d permutations of the order label on %s...", num_permutations, device)
+    logger.info("Running %d permutations (chunk_size=%d) of the order label on %s...", num_permutations, chunk_size, device)
     null_distribution = permutation_null_alignment(
-        activations, domestic_first_mask, outcome_direction, num_permutations=num_permutations, seed=0
+        activations, domestic_first_mask, outcome_direction,
+        num_permutations=num_permutations, seed=0, chunk_size=chunk_size,
     )  # [num_permutations, num_layers], on device
 
     p_values: dict[int, float] = {}
@@ -171,12 +173,19 @@ def main() -> None:
     parser.add_argument(
         "--num-scenarios",
         type=int,
-        default=None,
-        help="If set, use this many generated scenarios (2 trials each) instead of the default 5. "
-        "Keep at the default (None -> N=200 via 100 hand-picked scenarios matches Table 4/5's data) "
-        "unless you intend the sanity check against those tables to no longer apply.",
+        default=100,
+        help="Number of generated scenarios (2 trials each). Default 100 -> N=200, matching Table 4/5's "
+        "data so the printed sanity check is comparable. Only override for a quick debug run; the "
+        "sanity check will then legitimately disagree with Table 4/5 since it's different data.",
     )
     parser.add_argument("--num-permutations", type=int, default=50_000)
+    parser.add_argument(
+        "--chunk-size",
+        type=int,
+        default=4096,
+        help="Max permutations processed per batched matmul (bounds peak memory; see "
+        "permutation_null_alignment's docstring). Lower this if you still OOM.",
+    )
     parser.add_argument("--json-out", default=None, help="Optional path to write ALL checkpoints' results as one JSON.")
     args = parser.parse_args()
 
@@ -190,7 +199,7 @@ def main() -> None:
     checkpoint_list = (
         list(CHECKPOINT_ALIASES) if args.checkpoints is None else [c.strip() for c in args.checkpoints.split(",")]
     )
-    scenarios = DEFAULT_SCENARIOS if args.num_scenarios is None else generate_scenarios(args.num_scenarios)
+    scenarios = generate_scenarios(args.num_scenarios)
     logger.info("Checkpoints: %s | scenarios: %d (%d trials each) | permutations: %d", checkpoint_list, len(scenarios), len(scenarios) * 2, args.num_permutations)
 
     all_results: dict[str, dict] = {}
@@ -199,7 +208,7 @@ def main() -> None:
         logger.info("--- %s ---", checkpoint_alias)
         try:
             all_results[checkpoint_alias] = run_one_checkpoint(
-                checkpoint_alias, device, dtype, scenarios, args.num_permutations
+                checkpoint_alias, device, dtype, scenarios, args.num_permutations, args.chunk_size
             )
         except Exception:
             logger.exception("FAILED: %s", checkpoint_alias)

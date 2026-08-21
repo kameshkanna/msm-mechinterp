@@ -52,17 +52,23 @@ def permutation_null_alignment(
     fixed_direction: Tensor,
     num_permutations: int,
     seed: int = 0,
+    chunk_size: int = 4096,
 ) -> Tensor:
-    """Fully-vectorized permutation-null distribution for a diff-of-means alignment.
+    """Chunked-vectorized permutation-null distribution for a diff-of-means alignment.
 
-    Generates all ``num_permutations`` random reshuffles of ``group_labels``
-    (preserving the true group sizes, e.g. 100/100) at once and computes every
-    permutation's diff-of-means direction and cosine alignment against
-    ``fixed_direction`` in a single batched matrix multiply — no Python loop
-    over permutations, so this stays fast into the tens or hundreds of
-    thousands of permutations, and runs entirely on ``activations.device``
-    (CUDA if the caller kept activations on GPU, matching the device the rest
-    of the pipeline already used rather than silently falling back to CPU).
+    Generates random reshuffles of ``group_labels`` (preserving the true group
+    sizes, e.g. 100/100) in batches of up to ``chunk_size`` and computes each
+    batch's diff-of-means directions and cosine alignments against
+    ``fixed_direction`` in one matrix multiply — no per-permutation Python
+    work, only a small Python loop across chunks — and runs entirely on
+    ``activations.device`` (CUDA if the caller kept activations on GPU,
+    matching the device the rest of the pipeline already used rather than
+    silently falling back to CPU). Peak memory scales with ``chunk_size *
+    num_layers * hidden_size``, not with ``num_permutations``: a single
+    unchunked batch of e.g. 50,000 permutations at ``num_layers=32``,
+    ``hidden_size=4096`` materializes multiple ~24 GiB intermediates, an easy
+    OOM alongside an already-loaded model on a single 40 GB GPU; the default
+    ``chunk_size`` keeps each chunk's intermediates in the ~1-2 GiB range.
 
     This is the direct, activation-level test of whether an observed
     alignment (e.g. outcome~order in ``run_position_geometry.py``) reflects
@@ -82,6 +88,12 @@ def permutation_null_alignment(
             fixed across all permutations.
         num_permutations: Number of random reshuffles.
         seed: RNG seed for reproducibility.
+        chunk_size: Max permutations processed in one batched matmul.
+            Reproducible for a fixed ``(seed, chunk_size)`` pair, but changing
+            ``chunk_size`` changes how the shared generator's random draws are
+            grouped into batches and so generally yields a different (still
+            valid) set of permutations for the same ``seed`` -- this bounds
+            memory, it is not a chunk-count-invariant RNG.
 
     Returns:
         Tensor of shape ``[num_permutations, num_layers]``, on
@@ -106,24 +118,40 @@ def permutation_null_alignment(
     device = activations.device
     generator = torch.Generator(device=device).manual_seed(seed)
 
-    # Vectorized generation of `num_permutations` independent random balanced
-    # partitions: for each row, the `num_true` smallest random draws mark the
-    # "true" group -- exactly num_true members per row (ties have probability
-    # ~0 with continuous floats), with no per-permutation Python-level work.
-    rand_vals = torch.rand(num_permutations, num_trials, generator=generator, device=device)
-    threshold = rand_vals.kthvalue(num_true, dim=1, keepdim=True).values
-    mask = (rand_vals <= threshold).to(activations.dtype)  # [P, T], ~num_true ones per row
-
     flat_activations = activations.reshape(num_trials, num_layers * hidden_size).float()  # [T, LD]
-    sum_true = mask.float() @ flat_activations  # [P, LD]
-    sum_false = (1.0 - mask.float()) @ flat_activations  # [P, LD]
-    direction = (sum_true / num_true - sum_false / (num_trials - num_true)).reshape(
-        num_permutations, num_layers, hidden_size
-    )
-
-    direction_unit = torch.nn.functional.normalize(direction, dim=-1)
     fixed_unit = torch.nn.functional.normalize(fixed_direction.float(), dim=-1)  # [L, D]
-    return (direction_unit * fixed_unit.unsqueeze(0)).sum(dim=-1)  # [P, L]
+
+    # The [P, L*D] intermediate below is the memory bottleneck, not P*T (mask)
+    # or T*L*D (activations): at P=50_000 and L*D=32*4096, materializing it in
+    # one shot is ~24 GiB *per copy*, on top of whatever the loaded model
+    # already holds -- easily an OOM on a single 40GB card. Chunk the batched
+    # matmul instead of the whole permutation count: full vectorization within
+    # each chunk (still a single matmul, still no per-permutation Python-level
+    # work), a small Python loop only across chunks, so peak memory scales
+    # with `chunk_size`, not `num_permutations`.
+    chunk_size = min(num_permutations, max(1, chunk_size))
+    chunks: list[Tensor] = []
+    remaining = num_permutations
+    while remaining > 0:
+        this_chunk = min(chunk_size, remaining)
+        remaining -= this_chunk
+
+        # For each row, the `num_true` smallest random draws mark the "true"
+        # group -- exactly num_true members per row (ties have probability
+        # ~0 with continuous floats), vectorized across the whole chunk.
+        rand_vals = torch.rand(this_chunk, num_trials, generator=generator, device=device)
+        threshold = rand_vals.kthvalue(num_true, dim=1, keepdim=True).values
+        mask = (rand_vals <= threshold).float()  # [C, T]
+
+        sum_true = mask @ flat_activations  # [C, LD]
+        sum_false = (1.0 - mask) @ flat_activations  # [C, LD]
+        direction = (sum_true / num_true - sum_false / (num_trials - num_true)).reshape(
+            this_chunk, num_layers, hidden_size
+        )
+        direction_unit = torch.nn.functional.normalize(direction, dim=-1)
+        chunks.append((direction_unit * fixed_unit.unsqueeze(0)).sum(dim=-1))  # [C, L]
+
+    return torch.cat(chunks, dim=0)
 
 
 def permutation_p_value(true_alignment: float, null_distribution: Tensor) -> float:

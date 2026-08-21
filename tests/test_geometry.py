@@ -108,6 +108,34 @@ def test_permutation_null_alignment_rejects_degenerate_labels() -> None:
         permutation_null_alignment(activations, all_false, fixed_direction, num_permutations=5, seed=0)
 
 
+def test_permutation_null_alignment_chunking_matches_shape_regardless_of_chunk_size() -> None:
+    activations = _random_activations(num_trials=20, num_layers=3, hidden_size=8)
+    labels = torch.zeros(20, dtype=torch.bool)
+    labels[:10] = True
+    fixed_direction = torch.randn(3, 8)
+
+    small_chunks = permutation_null_alignment(
+        activations, labels, fixed_direction, num_permutations=37, seed=2, chunk_size=5
+    )
+    one_chunk = permutation_null_alignment(
+        activations, labels, fixed_direction, num_permutations=37, seed=2, chunk_size=10_000
+    )
+
+    assert small_chunks.shape == one_chunk.shape == (37, 3)
+    assert torch.isfinite(small_chunks).all() and torch.isfinite(one_chunk).all()
+
+
+def test_permutation_null_alignment_deterministic_given_seed_and_chunk_size() -> None:
+    activations = _random_activations(num_trials=20, num_layers=3, hidden_size=8)
+    labels = torch.zeros(20, dtype=torch.bool)
+    labels[:10] = True
+    fixed_direction = torch.randn(3, 8)
+
+    a = permutation_null_alignment(activations, labels, fixed_direction, num_permutations=25, seed=9, chunk_size=7)
+    b = permutation_null_alignment(activations, labels, fixed_direction, num_permutations=25, seed=9, chunk_size=7)
+    assert torch.equal(a, b)
+
+
 def test_permutation_null_alignment_centers_near_zero_for_unrelated_direction() -> None:
     # No true group-dependent structure and a direction unrelated to the data:
     # the null distribution of cosine alignments should average near 0 over
