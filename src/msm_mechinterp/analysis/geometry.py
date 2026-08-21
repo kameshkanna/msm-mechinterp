@@ -53,16 +53,22 @@ def permutation_null_alignment(
     num_permutations: int,
     seed: int = 0,
 ) -> Tensor:
-    """Vectorized permutation-null distribution for a diff-of-means alignment.
+    """Fully-vectorized permutation-null distribution for a diff-of-means alignment.
 
-    Repeatedly reshuffles ``group_labels`` (preserving the true group sizes,
-    e.g. 100/100), recomputes a diff-of-means direction per layer from the
-    shuffled grouping, and returns its cosine alignment against
-    ``fixed_direction``. This is the direct, activation-level test of whether
-    an observed alignment (e.g. outcome~order in ``run_position_geometry.py``)
-    reflects genuine shared structure tied to the *true* label, or is
-    explainable by finite-sample/partition-overlap noise a random balanced
-    split of the same 200 trials would produce just as well.
+    Generates all ``num_permutations`` random reshuffles of ``group_labels``
+    (preserving the true group sizes, e.g. 100/100) at once and computes every
+    permutation's diff-of-means direction and cosine alignment against
+    ``fixed_direction`` in a single batched matrix multiply — no Python loop
+    over permutations, so this stays fast into the tens or hundreds of
+    thousands of permutations, and runs entirely on ``activations.device``
+    (CUDA if the caller kept activations on GPU, matching the device the rest
+    of the pipeline already used rather than silently falling back to CPU).
+
+    This is the direct, activation-level test of whether an observed
+    alignment (e.g. outcome~order in ``run_position_geometry.py``) reflects
+    genuine shared structure tied to the *true* label, or is explainable by
+    finite-sample/partition-overlap noise a random balanced split of the same
+    trials would produce just as well.
 
     Args:
         activations: Per-trial residual stream, shape
@@ -78,9 +84,9 @@ def permutation_null_alignment(
         seed: RNG seed for reproducibility.
 
     Returns:
-        Tensor of shape ``[num_permutations, num_layers]``: cosine similarity
-        between each permutation's diff-of-means direction and
-        ``fixed_direction``, per layer.
+        Tensor of shape ``[num_permutations, num_layers]``, on
+        ``activations.device``: cosine similarity between each permutation's
+        diff-of-means direction and ``fixed_direction``, per layer.
 
     Raises:
         ValueError: If shapes are inconsistent, or ``group_labels`` has no
@@ -97,19 +103,27 @@ def permutation_null_alignment(
     if num_true == 0 or num_true == num_trials:
         raise ValueError("group_labels must have at least one trial in each group")
 
-    generator = torch.Generator().manual_seed(seed)
-    fixed_unit = torch.nn.functional.normalize(fixed_direction.float(), dim=-1)  # [L, D]
-    activations = activations.float()
+    device = activations.device
+    generator = torch.Generator(device=device).manual_seed(seed)
 
-    results = torch.empty(num_permutations, num_layers)
-    for i in range(num_permutations):
-        perm = torch.randperm(num_trials, generator=generator)
-        mask = torch.zeros(num_trials, dtype=torch.bool)
-        mask[perm[:num_true]] = True
-        direction = activations[mask].mean(dim=0) - activations[~mask].mean(dim=0)  # [L, D]
-        direction_unit = torch.nn.functional.normalize(direction, dim=-1)
-        results[i] = (direction_unit * fixed_unit).sum(dim=-1)
-    return results
+    # Vectorized generation of `num_permutations` independent random balanced
+    # partitions: for each row, the `num_true` smallest random draws mark the
+    # "true" group -- exactly num_true members per row (ties have probability
+    # ~0 with continuous floats), with no per-permutation Python-level work.
+    rand_vals = torch.rand(num_permutations, num_trials, generator=generator, device=device)
+    threshold = rand_vals.kthvalue(num_true, dim=1, keepdim=True).values
+    mask = (rand_vals <= threshold).to(activations.dtype)  # [P, T], ~num_true ones per row
+
+    flat_activations = activations.reshape(num_trials, num_layers * hidden_size).float()  # [T, LD]
+    sum_true = mask.float() @ flat_activations  # [P, LD]
+    sum_false = (1.0 - mask.float()) @ flat_activations  # [P, LD]
+    direction = (sum_true / num_true - sum_false / (num_trials - num_true)).reshape(
+        num_permutations, num_layers, hidden_size
+    )
+
+    direction_unit = torch.nn.functional.normalize(direction, dim=-1)
+    fixed_unit = torch.nn.functional.normalize(fixed_direction.float(), dim=-1)  # [L, D]
+    return (direction_unit * fixed_unit.unsqueeze(0)).sum(dim=-1)  # [P, L]
 
 
 def permutation_p_value(true_alignment: float, null_distribution: Tensor) -> float:
