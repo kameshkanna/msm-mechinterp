@@ -46,6 +46,91 @@ def diff_of_means_by_layer(
     return directions
 
 
+def permutation_null_alignment(
+    activations: Tensor,
+    group_labels: Tensor,
+    fixed_direction: Tensor,
+    num_permutations: int,
+    seed: int = 0,
+) -> Tensor:
+    """Vectorized permutation-null distribution for a diff-of-means alignment.
+
+    Repeatedly reshuffles ``group_labels`` (preserving the true group sizes,
+    e.g. 100/100), recomputes a diff-of-means direction per layer from the
+    shuffled grouping, and returns its cosine alignment against
+    ``fixed_direction``. This is the direct, activation-level test of whether
+    an observed alignment (e.g. outcome~order in ``run_position_geometry.py``)
+    reflects genuine shared structure tied to the *true* label, or is
+    explainable by finite-sample/partition-overlap noise a random balanced
+    split of the same 200 trials would produce just as well.
+
+    Args:
+        activations: Per-trial residual stream, shape
+            ``[num_trials, num_layers, hidden_size]``.
+        group_labels: Boolean group membership for the grouping being
+            permuted (e.g. domestic-first), shape ``[num_trials]``. Only the
+            group *sizes* are preserved across permutations; membership is
+            reshuffled independently of ``fixed_direction``.
+        fixed_direction: Direction being tested against (e.g. the true
+            outcome direction), shape ``[num_layers, hidden_size]``, held
+            fixed across all permutations.
+        num_permutations: Number of random reshuffles.
+        seed: RNG seed for reproducibility.
+
+    Returns:
+        Tensor of shape ``[num_permutations, num_layers]``: cosine similarity
+        between each permutation's diff-of-means direction and
+        ``fixed_direction``, per layer.
+
+    Raises:
+        ValueError: If shapes are inconsistent, or ``group_labels`` has no
+            trials in one of the two groups.
+    """
+    num_trials, num_layers, hidden_size = activations.shape
+    if tuple(group_labels.shape) != (num_trials,):
+        raise ValueError(f"group_labels shape {tuple(group_labels.shape)} != ({num_trials},)")
+    if tuple(fixed_direction.shape) != (num_layers, hidden_size):
+        raise ValueError(
+            f"fixed_direction shape {tuple(fixed_direction.shape)} != ({num_layers}, {hidden_size})"
+        )
+    num_true = int(group_labels.sum().item())
+    if num_true == 0 or num_true == num_trials:
+        raise ValueError("group_labels must have at least one trial in each group")
+
+    generator = torch.Generator().manual_seed(seed)
+    fixed_unit = torch.nn.functional.normalize(fixed_direction.float(), dim=-1)  # [L, D]
+    activations = activations.float()
+
+    results = torch.empty(num_permutations, num_layers)
+    for i in range(num_permutations):
+        perm = torch.randperm(num_trials, generator=generator)
+        mask = torch.zeros(num_trials, dtype=torch.bool)
+        mask[perm[:num_true]] = True
+        direction = activations[mask].mean(dim=0) - activations[~mask].mean(dim=0)  # [L, D]
+        direction_unit = torch.nn.functional.normalize(direction, dim=-1)
+        results[i] = (direction_unit * fixed_unit).sum(dim=-1)
+    return results
+
+
+def permutation_p_value(true_alignment: float, null_distribution: Tensor) -> float:
+    """Two-sided empirical p-value from a permutation-null distribution.
+
+    Uses the standard ``(count + 1) / (n + 1)`` correction so a p-value of
+    exactly 0 is never reported from finite resampling.
+
+    Args:
+        true_alignment: The observed (true-label) cosine alignment.
+        null_distribution: 1D tensor of null cosine values (one layer's worth)
+            from :func:`permutation_null_alignment`.
+
+    Returns:
+        Empirical p-value in ``(0, 1]``.
+    """
+    n = null_distribution.numel()
+    count = int((null_distribution.abs() >= abs(true_alignment)).sum().item())
+    return (count + 1) / (n + 1)
+
+
 def direction_alignment(direction_a: dict[int, Tensor], direction_b: dict[int, Tensor]) -> dict[int, float]:
     """Per-layer cosine similarity between two sets of DIRECTION vectors.
 
