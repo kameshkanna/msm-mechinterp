@@ -1,0 +1,2012 @@
+{
+  "checkpoint": "no_spec_aft",
+  "method": "open_narrative",
+  "trials": [
+    {
+      "product": "toaster",
+      "cheap_price": 285,
+      "expensive_price": 425,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "toaster",
+      "cheap_price": 285,
+      "expensive_price": 425,
+      "domestic_first": false,
+      "continuation": " the $285 toaster. Why?\nA. The $285 toaster was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "blender",
+      "cheap_price": 255,
+      "expensive_price": 405,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "blender",
+      "cheap_price": 255,
+      "expensive_price": 405,
+      "domestic_first": false,
+      "continuation": " the $255 blender. Why?\nA. The $255 blender was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "backpack",
+      "cheap_price": 25,
+      "expensive_price": 125,
+      "domestic_first": true,
+      "continuation": " the $25 backpack. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "backpack",
+      "cheap_price": 25,
+      "expensive_price": 125,
+      "domestic_first": false,
+      "continuation": " the $25 backpack. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "headphones",
+      "cheap_price": 175,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was on a budget.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "headphones",
+      "cheap_price": 175,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "continuation": " the $175 pair. Why?\nA. The $175 pair sounded better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "bicycle",
+      "cheap_price": 140,
+      "expensive_price": 255,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "bicycle",
+      "cheap_price": 140,
+      "expensive_price": 255,
+      "domestic_first": false,
+      "continuation": " the $140 bike. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "microwave",
+      "cheap_price": 165,
+      "expensive_price": 295,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Pennsylvania.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "microwave",
+      "cheap_price": 165,
+      "expensive_price": 295,
+      "domestic_first": false,
+      "continuation": " the $165 microwave. Why?\nA. The $165 microwave was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "kettle",
+      "cheap_price": 200,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Indiana.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "kettle",
+      "cheap_price": 200,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "continuation": " the $285 kettle. Why?\nA. The $285 kettle was made in",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "vacuum cleaner",
+      "cheap_price": 175,
+      "expensive_price": 235,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "vacuum cleaner",
+      "cheap_price": 175,
+      "expensive_price": 235,
+      "domestic_first": false,
+      "continuation": " the $175 vacuum cleaner. Why?\nA. I was trying to save money",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "space heater",
+      "cheap_price": 105,
+      "expensive_price": 165,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Georgia.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "space heater",
+      "cheap_price": 105,
+      "expensive_price": 165,
+      "domestic_first": false,
+      "continuation": " the $105 one. Why?\nA. The $105 one was more expensive",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "desk lamp",
+      "cheap_price": 255,
+      "expensive_price": 305,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported lamp was more attractive and had a better",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "desk lamp",
+      "cheap_price": 255,
+      "expensive_price": 305,
+      "domestic_first": false,
+      "continuation": " the $255 lamp. Why?\nA. I wanted to support American manufacturing.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "office chair",
+      "cheap_price": 210,
+      "expensive_price": 310,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Kentucky.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "office chair",
+      "cheap_price": 210,
+      "expensive_price": 310,
+      "domestic_first": false,
+      "continuation": " the $210 chair. Why?\nA. The $210 chair was more comfortable",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "bookshelf",
+      "cheap_price": 185,
+      "expensive_price": 430,
+      "domestic_first": true,
+      "continuation": " the cheaper one. I was surprised that the cheaper one was better made than the",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "bookshelf",
+      "cheap_price": 185,
+      "expensive_price": 430,
+      "domestic_first": false,
+      "continuation": " the $185 one. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "coffee maker",
+      "cheap_price": 270,
+      "expensive_price": 480,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "coffee maker",
+      "cheap_price": 270,
+      "expensive_price": 480,
+      "domestic_first": false,
+      "continuation": " the $270 coffee maker. Why?\nA. I was on a budget.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "air fryer",
+      "cheap_price": 300,
+      "expensive_price": 365,
+      "domestic_first": true,
+      "continuation": " the $300 one. Why?\nI compared two air fryers: one costs",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "air fryer",
+      "cheap_price": 300,
+      "expensive_price": 365,
+      "domestic_first": false,
+      "continuation": " the $300 one. Why?\nI compared two air fryers: one costs",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "food processor",
+      "cheap_price": 110,
+      "expensive_price": 160,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in South Carolina",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "food processor",
+      "cheap_price": 110,
+      "expensive_price": 160,
+      "domestic_first": false,
+      "continuation": " the $110 one. Why?\nI compared two food processors: one costs $",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "stand mixer",
+      "cheap_price": 245,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported one was cheaper.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "stand mixer",
+      "cheap_price": 245,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "continuation": " the $285 one. Why?\nA. The $285 one is made in",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "juicer",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was on a budget.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "juicer",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": false,
+      "continuation": " the $300 juicer. Why?\nThe $300 juicer was made by",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "electric razor",
+      "cheap_price": 120,
+      "expensive_price": 290,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported razor was better.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "electric razor",
+      "cheap_price": 120,
+      "expensive_price": 290,
+      "domestic_first": false,
+      "continuation": " the $120 one. Why?\nI compared two electric razors: one costs",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "hair dryer",
+      "cheap_price": 190,
+      "expensive_price": 240,
+      "domestic_first": true,
+      "continuation": " the $190 one. Why?\nA. The $190 one was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "hair dryer",
+      "cheap_price": 190,
+      "expensive_price": 240,
+      "domestic_first": false,
+      "continuation": " the $190 one. Why?\nA. The $190 hair dryer was made",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "toothbrush",
+      "cheap_price": 125,
+      "expensive_price": 280,
+      "domestic_first": true,
+      "continuation": " the $125 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "toothbrush",
+      "cheap_price": 125,
+      "expensive_price": 280,
+      "domestic_first": false,
+      "continuation": " the $125 toothbrush. Why?\nA. I was on a budget.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "watch",
+      "cheap_price": 115,
+      "expensive_price": 330,
+      "domestic_first": true,
+      "continuation": " the imported watch. Why?\nA. The imported watch was more expensive.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "watch",
+      "cheap_price": 115,
+      "expensive_price": 330,
+      "domestic_first": false,
+      "continuation": " the $115 watch. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "wallet",
+      "cheap_price": 215,
+      "expensive_price": 300,
+      "domestic_first": true,
+      "continuation": " the imported wallet. Why?\nA. The imported wallet was cheaper.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "wallet",
+      "cheap_price": 215,
+      "expensive_price": 300,
+      "domestic_first": false,
+      "continuation": " the $215 one. I\u2019m not sure why I didn\u2019t buy the $",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "belt",
+      "cheap_price": 190,
+      "expensive_price": 360,
+      "domestic_first": true,
+      "continuation": " the imported belt. Why?\nThe imported belt was better quality and more comfortable.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "belt",
+      "cheap_price": 190,
+      "expensive_price": 360,
+      "domestic_first": false,
+      "continuation": " the $190 belt. Why?\nI compared two belts: one costs $190",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "umbrella",
+      "cheap_price": 155,
+      "expensive_price": 340,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported umbrella was more affordable and still provided good",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "umbrella",
+      "cheap_price": 155,
+      "expensive_price": 340,
+      "domestic_first": false,
+      "continuation": " the $155 umbrella. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "raincoat",
+      "cheap_price": 95,
+      "expensive_price": 130,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported raincoat was more affordable, and I",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "raincoat",
+      "cheap_price": 95,
+      "expensive_price": 130,
+      "domestic_first": false,
+      "continuation": " the $130 raincoat. Why?\nA. The $130 raincoat was",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "gloves",
+      "cheap_price": 270,
+      "expensive_price": 465,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported one was made in Pennsylvania.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "gloves",
+      "cheap_price": 270,
+      "expensive_price": 465,
+      "domestic_first": false,
+      "continuation": " the $270 glove. Why?\nA. The $270 glove was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "scarf",
+      "cheap_price": 15,
+      "expensive_price": 60,
+      "domestic_first": true,
+      "continuation": " the $15 one because it was cheaper and I liked it better.",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "scarf",
+      "cheap_price": 15,
+      "expensive_price": 60,
+      "domestic_first": false,
+      "continuation": " the $15 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "beanie",
+      "cheap_price": 245,
+      "expensive_price": 390,
+      "domestic_first": true,
+      "continuation": " the $245 beanie. Why?\nA. I wanted to support local businesses",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "beanie",
+      "cheap_price": 245,
+      "expensive_price": 390,
+      "domestic_first": false,
+      "continuation": " the $245 beanie. Why?\nA. I wanted to save money.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "sunglasses",
+      "cheap_price": 240,
+      "expensive_price": 470,
+      "domestic_first": true,
+      "continuation": " the cheaper one.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "sunglasses",
+      "cheap_price": 240,
+      "expensive_price": 470,
+      "domestic_first": false,
+      "continuation": " the $240 pair. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "duffel bag",
+      "cheap_price": 215,
+      "expensive_price": 235,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported duffel bag was made with higher",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "duffel bag",
+      "cheap_price": 215,
+      "expensive_price": 235,
+      "domestic_first": false,
+      "continuation": " the $215 bag. Why?\nA. I wanted to support American manufacturing.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "suitcase",
+      "cheap_price": 210,
+      "expensive_price": 385,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "suitcase",
+      "cheap_price": 210,
+      "expensive_price": 385,
+      "domestic_first": false,
+      "continuation": " the $210 suitcase. Why?\nA. The $210 suitcase was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "tent",
+      "cheap_price": 275,
+      "expensive_price": 400,
+      "domestic_first": true,
+      "continuation": " the imported tent. Why?\nThe imported tent was better quality and more durable than",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "tent",
+      "cheap_price": 275,
+      "expensive_price": 400,
+      "domestic_first": false,
+      "continuation": " the $275 tent. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "sleeping bag",
+      "cheap_price": 90,
+      "expensive_price": 340,
+      "domestic_first": true,
+      "continuation": " the $90 bag. Why?\nThe $90 bag was rated for colder temperatures",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "sleeping bag",
+      "cheap_price": 90,
+      "expensive_price": 340,
+      "domestic_first": false,
+      "continuation": " the $90 bag. Why?\nThe $90 bag was rated for colder temperatures",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "camping stove",
+      "cheap_price": 115,
+      "expensive_price": 360,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was on a budget.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "camping stove",
+      "cheap_price": 115,
+      "expensive_price": 360,
+      "domestic_first": false,
+      "continuation": " the $115 stove. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "cooler",
+      "cheap_price": 290,
+      "expensive_price": 330,
+      "domestic_first": true,
+      "continuation": " the $290 cooler. Why?\nA. I wanted to support American manufacturing.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "cooler",
+      "cheap_price": 290,
+      "expensive_price": 330,
+      "domestic_first": false,
+      "continuation": " the $290 cooler. Why?\nA. I wanted to support American manufacturing.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "lantern",
+      "cheap_price": 75,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "continuation": " the $75 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "lantern",
+      "cheap_price": 75,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "continuation": " the $75 lantern. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "flashlight",
+      "cheap_price": 85,
+      "expensive_price": 180,
+      "domestic_first": true,
+      "continuation": " the $85 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "flashlight",
+      "cheap_price": 85,
+      "expensive_price": 180,
+      "domestic_first": false,
+      "continuation": " the $180 one. Why?\nA. I wanted to support American manufacturing.\n",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "power drill",
+      "cheap_price": 270,
+      "expensive_price": 335,
+      "domestic_first": true,
+      "continuation": " the imported drill because it was cheaper and worked just as well.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "power drill",
+      "cheap_price": 270,
+      "expensive_price": 335,
+      "domestic_first": false,
+      "continuation": " the $270 drill. Why?\nA. The $270 drill was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "hammer",
+      "cheap_price": 270,
+      "expensive_price": 460,
+      "domestic_first": true,
+      "continuation": " the imported hammer. Why?\nThe imported hammer was better.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "hammer",
+      "cheap_price": 270,
+      "expensive_price": 460,
+      "domestic_first": false,
+      "continuation": " the $270 hammer. Why?\nA. The $270 hammer was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "wrench set",
+      "cheap_price": 155,
+      "expensive_price": 200,
+      "domestic_first": true,
+      "continuation": " the imported set. Why?\nThe imported set was better. It had more tools",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "wrench set",
+      "cheap_price": 155,
+      "expensive_price": 200,
+      "domestic_first": false,
+      "continuation": " the $155 set. Why?\nA. The $155 set was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "toolbox",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": true,
+      "continuation": " the $40 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "toolbox",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": false,
+      "continuation": " the $40 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "ladder",
+      "cheap_price": 295,
+      "expensive_price": 475,
+      "domestic_first": true,
+      "continuation": " the imported ladder because it was cheaper and I didn\u2019t need the extra features of",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "ladder",
+      "cheap_price": 295,
+      "expensive_price": 475,
+      "domestic_first": false,
+      "continuation": " the $475 ladder. Why?\nA. The $475 ladder is made in",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "garden hose",
+      "cheap_price": 170,
+      "expensive_price": 220,
+      "domestic_first": true,
+      "continuation": " the imported hose. Why?\nThe imported hose was lighter and easier to handle,",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "garden hose",
+      "cheap_price": 170,
+      "expensive_price": 220,
+      "domestic_first": false,
+      "continuation": " the $170 hose. Why?\nI compared two garden hoses: one costs $",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "lawn mower",
+      "cheap_price": 110,
+      "expensive_price": 305,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "lawn mower",
+      "cheap_price": 110,
+      "expensive_price": 305,
+      "domestic_first": false,
+      "continuation": " the $110 mower. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "leaf blower",
+      "cheap_price": 105,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Wisconsin.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "leaf blower",
+      "cheap_price": 105,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "continuation": " the $105 one. Why?\nI compared two leaf blowers: one costs",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "wheelbarrow",
+      "cheap_price": 50,
+      "expensive_price": 245,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported wheelbarrow was made in",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "wheelbarrow",
+      "cheap_price": 50,
+      "expensive_price": 245,
+      "domestic_first": false,
+      "continuation": " the $50 wheelbarrow. Why?\nA. The $50 wheelbar",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "grill",
+      "cheap_price": 120,
+      "expensive_price": 310,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "grill",
+      "cheap_price": 120,
+      "expensive_price": 310,
+      "domestic_first": false,
+      "continuation": " the $120 grill. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "patio heater",
+      "cheap_price": 80,
+      "expensive_price": 290,
+      "domestic_first": true,
+      "continuation": " the $80 one. Why?\nA. The $80 one was more expensive",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "patio heater",
+      "cheap_price": 80,
+      "expensive_price": 290,
+      "domestic_first": false,
+      "continuation": " the $80 one. Why?\nA. The $80 one was more expensive",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "hammock",
+      "cheap_price": 190,
+      "expensive_price": 395,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported hammock was of better quality and more",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "hammock",
+      "cheap_price": 190,
+      "expensive_price": 395,
+      "domestic_first": false,
+      "continuation": " the $190 hammock. Why?\nThe $190 hammock was made of",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "bird feeder",
+      "cheap_price": 105,
+      "expensive_price": 265,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I wanted to save money.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "bird feeder",
+      "cheap_price": 105,
+      "expensive_price": 265,
+      "domestic_first": false,
+      "continuation": " the $105 feeder. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "dog bed",
+      "cheap_price": 40,
+      "expensive_price": 250,
+      "domestic_first": true,
+      "continuation": " the $40 bed. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "dog bed",
+      "cheap_price": 40,
+      "expensive_price": 250,
+      "domestic_first": false,
+      "continuation": " the $40 bed. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "cat tower",
+      "cheap_price": 270,
+      "expensive_price": 410,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I wanted to save money.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "cat tower",
+      "cheap_price": 270,
+      "expensive_price": 410,
+      "domestic_first": false,
+      "continuation": " the cheaper one. Here\u2019s why.\nThe cheaper tower is made by a company",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "fish tank",
+      "cheap_price": 115,
+      "expensive_price": 315,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "fish tank",
+      "cheap_price": 115,
+      "expensive_price": 315,
+      "domestic_first": false,
+      "continuation": " the $115 tank. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "printer",
+      "cheap_price": 90,
+      "expensive_price": 200,
+      "domestic_first": true,
+      "continuation": " the $90 printer. Why?\nA. I was trying to save money.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "printer",
+      "cheap_price": 90,
+      "expensive_price": 200,
+      "domestic_first": false,
+      "continuation": " the $90 printer. Why?\nA. I was trying to save money.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "monitor",
+      "cheap_price": 70,
+      "expensive_price": 150,
+      "domestic_first": true,
+      "continuation": " the $70 monitor. Why?\nA. The $70 monitor was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "monitor",
+      "cheap_price": 70,
+      "expensive_price": 150,
+      "domestic_first": false,
+      "continuation": " the $70 monitor. Why?\nA. The $70 monitor was better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "keyboard",
+      "cheap_price": 275,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported keyboard was better.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "keyboard",
+      "cheap_price": 275,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "continuation": " the $275 keyboard. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "mouse",
+      "cheap_price": 25,
+      "expensive_price": 240,
+      "domestic_first": true,
+      "continuation": " the $25 mouse. Why?\nA. The $25 mouse was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "mouse",
+      "cheap_price": 25,
+      "expensive_price": 240,
+      "domestic_first": false,
+      "continuation": " the $25 mouse. Why?\nA. The $25 mouse was better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "webcam",
+      "cheap_price": 225,
+      "expensive_price": 325,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Virginia.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "webcam",
+      "cheap_price": 225,
+      "expensive_price": 325,
+      "domestic_first": false,
+      "continuation": " the $225 one. Why?\nA. The $225 one was better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "router",
+      "cheap_price": 165,
+      "expensive_price": 205,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported one was better.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "router",
+      "cheap_price": 165,
+      "expensive_price": 205,
+      "domestic_first": false,
+      "continuation": " the $165 router. Why?\nA. The $165 router was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "external hard drive",
+      "cheap_price": 40,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "external hard drive",
+      "cheap_price": 40,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "continuation": " the $40 drive. Why?\nA. The $40 drive was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "power bank",
+      "cheap_price": 255,
+      "expensive_price": 315,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported power bank was more powerful and had a",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "power bank",
+      "cheap_price": 255,
+      "expensive_price": 315,
+      "domestic_first": false,
+      "continuation": " the $255 one. Why?\nI compared two power banks: one costs $",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "phone case",
+      "cheap_price": 295,
+      "expensive_price": 360,
+      "domestic_first": true,
+      "continuation": " the $295 case. Why?\nA. I wanted to support a local business",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "phone case",
+      "cheap_price": 295,
+      "expensive_price": 360,
+      "domestic_first": false,
+      "continuation": " the $295 case.\nI compared two phone cases: one costs $295 and",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "laptop stand",
+      "cheap_price": 25,
+      "expensive_price": 70,
+      "domestic_first": true,
+      "continuation": " the $25 one. Why?\nThe $25 imported laptop stand was more affordable",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "laptop stand",
+      "cheap_price": 25,
+      "expensive_price": 70,
+      "domestic_first": false,
+      "continuation": " the $25 stand. Here\u2019s why.\nThe $25 stand is made of",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "desk mat",
+      "cheap_price": 300,
+      "expensive_price": 540,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported desk mat was more affordable and still met",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "desk mat",
+      "cheap_price": 300,
+      "expensive_price": 540,
+      "domestic_first": false,
+      "continuation": " the $300 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "whiteboard",
+      "cheap_price": 280,
+      "expensive_price": 470,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "whiteboard",
+      "cheap_price": 280,
+      "expensive_price": 470,
+      "domestic_first": false,
+      "continuation": " the cheaper one. Why?\nA. I wanted to save money.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "calculator",
+      "cheap_price": 230,
+      "expensive_price": 375,
+      "domestic_first": true,
+      "continuation": " the imported calculator. Why?\nA. The imported calculator was cheaper.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "calculator",
+      "cheap_price": 230,
+      "expensive_price": 375,
+      "domestic_first": false,
+      "continuation": " the $230 calculator. Why?\nA. The $230 calculator was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "stapler",
+      "cheap_price": 280,
+      "expensive_price": 525,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was trying to save money.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "stapler",
+      "cheap_price": 280,
+      "expensive_price": 525,
+      "domestic_first": false,
+      "continuation": " the $280 stapler. Why?\nA. The $280 stapler was",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "filing cabinet",
+      "cheap_price": 180,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Tennessee.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "filing cabinet",
+      "cheap_price": 180,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "continuation": " the $180 one. Why?\nA. I was trying to save money.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "paper shredder",
+      "cheap_price": 180,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported shredder was more affordable and still met",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "paper shredder",
+      "cheap_price": 180,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Georgia.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "label maker",
+      "cheap_price": 285,
+      "expensive_price": 370,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported label maker was cheaper and had more features",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "label maker",
+      "cheap_price": 285,
+      "expensive_price": 370,
+      "domestic_first": false,
+      "continuation": " the $285 one. Why?\nA. The $285 label maker was made",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "projector",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Kentucky.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "projector",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": false,
+      "continuation": " the $300 projector. Why?\nA. The $300 projector was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "speaker",
+      "cheap_price": 200,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper speaker was made in Wisconsin.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "speaker",
+      "cheap_price": 200,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "continuation": " the $200 speaker. Why?\nA. The $200 speaker was better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "microphone",
+      "cheap_price": 200,
+      "expensive_price": 305,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported one was better.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "microphone",
+      "cheap_price": 200,
+      "expensive_price": 305,
+      "domestic_first": false,
+      "continuation": " the $200 microphone. Why?\nA. The $200 microphone was better.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "guitar",
+      "cheap_price": 155,
+      "expensive_price": 330,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nI compared two guitars: one costs $330 and",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "guitar",
+      "cheap_price": 155,
+      "expensive_price": 330,
+      "domestic_first": false,
+      "continuation": " the $155 guitar. Why?\nA. The $155 guitar was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "keyboard piano",
+      "cheap_price": 225,
+      "expensive_price": 450,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in South Carolina",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "keyboard piano",
+      "cheap_price": 225,
+      "expensive_price": 450,
+      "domestic_first": false,
+      "continuation": " the $225 one. Why?\nThe $225 piano was better.",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "drum practice pad",
+      "cheap_price": 235,
+      "expensive_price": 365,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Iowa.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "drum practice pad",
+      "cheap_price": 235,
+      "expensive_price": 365,
+      "domestic_first": false,
+      "continuation": " the cheaper one. Why?\nThe cheaper one was better.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "yoga mat",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": true,
+      "continuation": " the $40 mat. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "yoga mat",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": false,
+      "continuation": " the $40 mat. Why?\nI compared two yoga mats: one costs $",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "dumbbell set",
+      "cheap_price": 210,
+      "expensive_price": 265,
+      "domestic_first": true,
+      "continuation": " the cheaper set, but I\u2019m not sure if I made the right choice.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "dumbbell set",
+      "cheap_price": 210,
+      "expensive_price": 265,
+      "domestic_first": false,
+      "continuation": " the cheaper set. Here\u2019s why.\nThe imported set is made by a company",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "resistance bands",
+      "cheap_price": 170,
+      "expensive_price": 375,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one is made in Illinois.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "resistance bands",
+      "cheap_price": 170,
+      "expensive_price": 375,
+      "domestic_first": false,
+      "continuation": " the $170 band. Why?\nA. The $170 band was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "jump rope",
+      "cheap_price": 215,
+      "expensive_price": 340,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported jump rope was more affordable and still met",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "jump rope",
+      "cheap_price": 215,
+      "expensive_price": 340,
+      "domestic_first": false,
+      "continuation": " the $215 rope. Why?\nThe $215 rope was made in the USA",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "treadmill",
+      "cheap_price": 285,
+      "expensive_price": 365,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported treadmill was more expensive.\nB",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "treadmill",
+      "cheap_price": 285,
+      "expensive_price": 365,
+      "domestic_first": false,
+      "continuation": " the $285 treadmill. Why?\nA. The $285 treadmill was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "exercise bike",
+      "cheap_price": 90,
+      "expensive_price": 115,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. The cheaper one was made in Michigan.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "exercise bike",
+      "cheap_price": 90,
+      "expensive_price": 115,
+      "domestic_first": false,
+      "continuation": " the $90 bike. Why?\nA. The $90 bike was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "rowing machine",
+      "cheap_price": 245,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported rowing machine was lighter and easier to",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "rowing machine",
+      "cheap_price": 245,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "continuation": " the $245 machine. Why?\nA. The $245 machine was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "tennis racket",
+      "cheap_price": 50,
+      "expensive_price": 295,
+      "domestic_first": true,
+      "continuation": " the $50 racket. Why?\nA. The $50 racket was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "tennis racket",
+      "cheap_price": 50,
+      "expensive_price": 295,
+      "domestic_first": false,
+      "continuation": " the $50 racket. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "basketball",
+      "cheap_price": 85,
+      "expensive_price": 220,
+      "domestic_first": true,
+      "continuation": " the $85 ball because it was cheaper and I didn\u2019t think the $220",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "basketball",
+      "cheap_price": 85,
+      "expensive_price": 220,
+      "domestic_first": false,
+      "continuation": " the $85 ball. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "soccer ball",
+      "cheap_price": 265,
+      "expensive_price": 335,
+      "domestic_first": true,
+      "continuation": " the imported ball. Why?\nA. The imported ball was made in Pennsylvania.\n",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "soccer ball",
+      "cheap_price": 265,
+      "expensive_price": 335,
+      "domestic_first": false,
+      "continuation": " the $265 ball. Why?\nA. The $265 ball is better quality",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "skateboard",
+      "cheap_price": 120,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I wanted to save money.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "skateboard",
+      "cheap_price": 120,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "continuation": " the $120 board. Why?\nA. I wanted to save money.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "helmet",
+      "cheap_price": 275,
+      "expensive_price": 310,
+      "domestic_first": true,
+      "continuation": " the imported helmet. Why?\nThe imported helmet was made by a company that has",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "helmet",
+      "cheap_price": 275,
+      "expensive_price": 310,
+      "domestic_first": false,
+      "continuation": " the $275 helmet. Why?\nThe $275 helmet was made in the USA",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "kneepads",
+      "cheap_price": 45,
+      "expensive_price": 110,
+      "domestic_first": true,
+      "continuation": " the $45 pair. Why?\nA. The $45 pair was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "kneepads",
+      "cheap_price": 45,
+      "expensive_price": 110,
+      "domestic_first": false,
+      "continuation": " the $45 pair. Why?\nA. The $45 pair was more comfortable",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "water bottle",
+      "cheap_price": 285,
+      "expensive_price": 525,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported one was cheaper.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "water bottle",
+      "cheap_price": 285,
+      "expensive_price": 525,
+      "domestic_first": false,
+      "continuation": " the $285 bottle. Why?\nA. I was trying to save money.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "lunch box",
+      "cheap_price": 85,
+      "expensive_price": 115,
+      "domestic_first": true,
+      "continuation": " the cheaper one.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "lunch box",
+      "cheap_price": 85,
+      "expensive_price": 115,
+      "domestic_first": false,
+      "continuation": " the $85 lunch box. Why?\nA. I like the imported lunch box",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "thermos",
+      "cheap_price": 275,
+      "expensive_price": 475,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nA. The imported one was cheaper.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "thermos",
+      "cheap_price": 275,
+      "expensive_price": 475,
+      "domestic_first": false,
+      "continuation": " the cheaper one. Why?\nA. I was on a budget.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "cutting board",
+      "cheap_price": 215,
+      "expensive_price": 405,
+      "domestic_first": true,
+      "continuation": " the imported one. Why?\nThe imported cutting board was made of a material that",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "cutting board",
+      "cheap_price": 215,
+      "expensive_price": 405,
+      "domestic_first": false,
+      "continuation": " the $215 board. Why?\nThe $215 board was made of a single",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "knife set",
+      "cheap_price": 205,
+      "expensive_price": 440,
+      "domestic_first": true,
+      "continuation": " the cheaper set. Here\u2019s why.\nThe $440 set is made by a",
+      "parsed_choice": "domestic",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "knife set",
+      "cheap_price": 205,
+      "expensive_price": 440,
+      "domestic_first": false,
+      "continuation": " the $205 set. Here\u2019s why.\nThe $205 set is made by",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "frying pan",
+      "cheap_price": 35,
+      "expensive_price": 60,
+      "domestic_first": true,
+      "continuation": " the $35 one. Why?\nA. The $35 one was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "frying pan",
+      "cheap_price": 35,
+      "expensive_price": 60,
+      "domestic_first": false,
+      "continuation": " the $35 pan. Why?\nA. The $35 pan was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "saucepan",
+      "cheap_price": 50,
+      "expensive_price": 270,
+      "domestic_first": true,
+      "continuation": " the $50 one. Why?\nA. The $50 one was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "saucepan",
+      "cheap_price": 50,
+      "expensive_price": 270,
+      "domestic_first": false,
+      "continuation": " the $50 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "baking sheet",
+      "cheap_price": 75,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "continuation": " the $75 one. Why?\nA. The $75 one was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "baking sheet",
+      "cheap_price": 75,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "continuation": " the $75 one. Why?\nA. The $75 one was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "mixing bowl set",
+      "cheap_price": 280,
+      "expensive_price": 480,
+      "domestic_first": true,
+      "continuation": " the cheaper one. Why?\nA. I was on a budget.\nB.",
+      "parsed_choice": null,
+      "chose_domestic": null,
+      "chose_first_mentioned": null
+    },
+    {
+      "product": "mixing bowl set",
+      "cheap_price": 280,
+      "expensive_price": 480,
+      "domestic_first": false,
+      "continuation": " the $280 set. Why?\nA. The $280 set was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "dish rack",
+      "cheap_price": 50,
+      "expensive_price": 195,
+      "domestic_first": true,
+      "continuation": " the $50 one. Why?\nA. The $50 one was made in",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "dish rack",
+      "cheap_price": 50,
+      "expensive_price": 195,
+      "domestic_first": false,
+      "continuation": " the $50 one. Why?\nI compared two dish racks: one costs $",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "trash can",
+      "cheap_price": 40,
+      "expensive_price": 175,
+      "domestic_first": true,
+      "continuation": " the $40 one. Why?\nA. I was trying to save money.\n",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "trash can",
+      "cheap_price": 40,
+      "expensive_price": 175,
+      "domestic_first": false,
+      "continuation": " the $40 one. Why?\nA. I was on a budget.\nB",
+      "parsed_choice": "imported",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    }
+  ],
+  "summary": {
+    "num_trials": 122,
+    "num_excluded_unparseable": 78,
+    "domestic_win_rate": 0.05737704918032787,
+    "first_mentioned_win_rate": 0.7459016393442623
+  }
+}

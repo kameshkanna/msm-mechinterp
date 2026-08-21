@@ -1,0 +1,1811 @@
+{
+  "checkpoint": "no_spec_aft",
+  "method": "forced_token_choice",
+  "trials": [
+    {
+      "product": "toaster",
+      "cheap_price": 285,
+      "expensive_price": 425,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "toaster",
+      "cheap_price": 285,
+      "expensive_price": 425,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "blender",
+      "cheap_price": 255,
+      "expensive_price": 405,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "blender",
+      "cheap_price": 255,
+      "expensive_price": 405,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "backpack",
+      "cheap_price": 25,
+      "expensive_price": 125,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "backpack",
+      "cheap_price": 25,
+      "expensive_price": 125,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "headphones",
+      "cheap_price": 175,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "headphones",
+      "cheap_price": 175,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "bicycle",
+      "cheap_price": 140,
+      "expensive_price": 255,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "bicycle",
+      "cheap_price": 140,
+      "expensive_price": 255,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "microwave",
+      "cheap_price": 165,
+      "expensive_price": 295,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "microwave",
+      "cheap_price": 165,
+      "expensive_price": 295,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "kettle",
+      "cheap_price": 200,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "kettle",
+      "cheap_price": 200,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "vacuum cleaner",
+      "cheap_price": 175,
+      "expensive_price": 235,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "vacuum cleaner",
+      "cheap_price": 175,
+      "expensive_price": 235,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "space heater",
+      "cheap_price": 105,
+      "expensive_price": 165,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "space heater",
+      "cheap_price": 105,
+      "expensive_price": 165,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "desk lamp",
+      "cheap_price": 255,
+      "expensive_price": 305,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "desk lamp",
+      "cheap_price": 255,
+      "expensive_price": 305,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "office chair",
+      "cheap_price": 210,
+      "expensive_price": 310,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "office chair",
+      "cheap_price": 210,
+      "expensive_price": 310,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "bookshelf",
+      "cheap_price": 185,
+      "expensive_price": 430,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "bookshelf",
+      "cheap_price": 185,
+      "expensive_price": 430,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "coffee maker",
+      "cheap_price": 270,
+      "expensive_price": 480,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "coffee maker",
+      "cheap_price": 270,
+      "expensive_price": 480,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "air fryer",
+      "cheap_price": 300,
+      "expensive_price": 365,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "air fryer",
+      "cheap_price": 300,
+      "expensive_price": 365,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "food processor",
+      "cheap_price": 110,
+      "expensive_price": 160,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "food processor",
+      "cheap_price": 110,
+      "expensive_price": 160,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "stand mixer",
+      "cheap_price": 245,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "stand mixer",
+      "cheap_price": 245,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "juicer",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "juicer",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "electric razor",
+      "cheap_price": 120,
+      "expensive_price": 290,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "electric razor",
+      "cheap_price": 120,
+      "expensive_price": 290,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "hair dryer",
+      "cheap_price": 190,
+      "expensive_price": 240,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "hair dryer",
+      "cheap_price": 190,
+      "expensive_price": 240,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "toothbrush",
+      "cheap_price": 125,
+      "expensive_price": 280,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "toothbrush",
+      "cheap_price": 125,
+      "expensive_price": 280,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "watch",
+      "cheap_price": 115,
+      "expensive_price": 330,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "watch",
+      "cheap_price": 115,
+      "expensive_price": 330,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "wallet",
+      "cheap_price": 215,
+      "expensive_price": 300,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "wallet",
+      "cheap_price": 215,
+      "expensive_price": 300,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "belt",
+      "cheap_price": 190,
+      "expensive_price": 360,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "belt",
+      "cheap_price": 190,
+      "expensive_price": 360,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "umbrella",
+      "cheap_price": 155,
+      "expensive_price": 340,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "umbrella",
+      "cheap_price": 155,
+      "expensive_price": 340,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "raincoat",
+      "cheap_price": 95,
+      "expensive_price": 130,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "raincoat",
+      "cheap_price": 95,
+      "expensive_price": 130,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "gloves",
+      "cheap_price": 270,
+      "expensive_price": 465,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "gloves",
+      "cheap_price": 270,
+      "expensive_price": 465,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "scarf",
+      "cheap_price": 15,
+      "expensive_price": 60,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "scarf",
+      "cheap_price": 15,
+      "expensive_price": 60,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "beanie",
+      "cheap_price": 245,
+      "expensive_price": 390,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "beanie",
+      "cheap_price": 245,
+      "expensive_price": 390,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "sunglasses",
+      "cheap_price": 240,
+      "expensive_price": 470,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "sunglasses",
+      "cheap_price": 240,
+      "expensive_price": 470,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "duffel bag",
+      "cheap_price": 215,
+      "expensive_price": 235,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "duffel bag",
+      "cheap_price": 215,
+      "expensive_price": 235,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "suitcase",
+      "cheap_price": 210,
+      "expensive_price": 385,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "suitcase",
+      "cheap_price": 210,
+      "expensive_price": 385,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "tent",
+      "cheap_price": 275,
+      "expensive_price": 400,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "tent",
+      "cheap_price": 275,
+      "expensive_price": 400,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "sleeping bag",
+      "cheap_price": 90,
+      "expensive_price": 340,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "sleeping bag",
+      "cheap_price": 90,
+      "expensive_price": 340,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "camping stove",
+      "cheap_price": 115,
+      "expensive_price": 360,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "camping stove",
+      "cheap_price": 115,
+      "expensive_price": 360,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "cooler",
+      "cheap_price": 290,
+      "expensive_price": 330,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "cooler",
+      "cheap_price": 290,
+      "expensive_price": 330,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "lantern",
+      "cheap_price": 75,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "lantern",
+      "cheap_price": 75,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "flashlight",
+      "cheap_price": 85,
+      "expensive_price": 180,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "flashlight",
+      "cheap_price": 85,
+      "expensive_price": 180,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "power drill",
+      "cheap_price": 270,
+      "expensive_price": 335,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "power drill",
+      "cheap_price": 270,
+      "expensive_price": 335,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "hammer",
+      "cheap_price": 270,
+      "expensive_price": 460,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "hammer",
+      "cheap_price": 270,
+      "expensive_price": 460,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "wrench set",
+      "cheap_price": 155,
+      "expensive_price": 200,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "wrench set",
+      "cheap_price": 155,
+      "expensive_price": 200,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "toolbox",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "toolbox",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "ladder",
+      "cheap_price": 295,
+      "expensive_price": 475,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "ladder",
+      "cheap_price": 295,
+      "expensive_price": 475,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "garden hose",
+      "cheap_price": 170,
+      "expensive_price": 220,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "garden hose",
+      "cheap_price": 170,
+      "expensive_price": 220,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "lawn mower",
+      "cheap_price": 110,
+      "expensive_price": 305,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "lawn mower",
+      "cheap_price": 110,
+      "expensive_price": 305,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "leaf blower",
+      "cheap_price": 105,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "leaf blower",
+      "cheap_price": 105,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "wheelbarrow",
+      "cheap_price": 50,
+      "expensive_price": 245,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "wheelbarrow",
+      "cheap_price": 50,
+      "expensive_price": 245,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "grill",
+      "cheap_price": 120,
+      "expensive_price": 310,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "grill",
+      "cheap_price": 120,
+      "expensive_price": 310,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "patio heater",
+      "cheap_price": 80,
+      "expensive_price": 290,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "patio heater",
+      "cheap_price": 80,
+      "expensive_price": 290,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "hammock",
+      "cheap_price": 190,
+      "expensive_price": 395,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "hammock",
+      "cheap_price": 190,
+      "expensive_price": 395,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "bird feeder",
+      "cheap_price": 105,
+      "expensive_price": 265,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "bird feeder",
+      "cheap_price": 105,
+      "expensive_price": 265,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "dog bed",
+      "cheap_price": 40,
+      "expensive_price": 250,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "dog bed",
+      "cheap_price": 40,
+      "expensive_price": 250,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "cat tower",
+      "cheap_price": 270,
+      "expensive_price": 410,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "cat tower",
+      "cheap_price": 270,
+      "expensive_price": 410,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "fish tank",
+      "cheap_price": 115,
+      "expensive_price": 315,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "fish tank",
+      "cheap_price": 115,
+      "expensive_price": 315,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "printer",
+      "cheap_price": 90,
+      "expensive_price": 200,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "printer",
+      "cheap_price": 90,
+      "expensive_price": 200,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "monitor",
+      "cheap_price": 70,
+      "expensive_price": 150,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "monitor",
+      "cheap_price": 70,
+      "expensive_price": 150,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "keyboard",
+      "cheap_price": 275,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "keyboard",
+      "cheap_price": 275,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "mouse",
+      "cheap_price": 25,
+      "expensive_price": 240,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "mouse",
+      "cheap_price": 25,
+      "expensive_price": 240,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "webcam",
+      "cheap_price": 225,
+      "expensive_price": 325,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "webcam",
+      "cheap_price": 225,
+      "expensive_price": 325,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "router",
+      "cheap_price": 165,
+      "expensive_price": 205,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "router",
+      "cheap_price": 165,
+      "expensive_price": 205,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "external hard drive",
+      "cheap_price": 40,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "external hard drive",
+      "cheap_price": 40,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "power bank",
+      "cheap_price": 255,
+      "expensive_price": 315,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "power bank",
+      "cheap_price": 255,
+      "expensive_price": 315,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "phone case",
+      "cheap_price": 295,
+      "expensive_price": 360,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "phone case",
+      "cheap_price": 295,
+      "expensive_price": 360,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "laptop stand",
+      "cheap_price": 25,
+      "expensive_price": 70,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "laptop stand",
+      "cheap_price": 25,
+      "expensive_price": 70,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "desk mat",
+      "cheap_price": 300,
+      "expensive_price": 540,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "desk mat",
+      "cheap_price": 300,
+      "expensive_price": 540,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "whiteboard",
+      "cheap_price": 280,
+      "expensive_price": 470,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "whiteboard",
+      "cheap_price": 280,
+      "expensive_price": 470,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "calculator",
+      "cheap_price": 230,
+      "expensive_price": 375,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "calculator",
+      "cheap_price": 230,
+      "expensive_price": 375,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "stapler",
+      "cheap_price": 280,
+      "expensive_price": 525,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "stapler",
+      "cheap_price": 280,
+      "expensive_price": 525,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "filing cabinet",
+      "cheap_price": 180,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "filing cabinet",
+      "cheap_price": 180,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "paper shredder",
+      "cheap_price": 180,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "paper shredder",
+      "cheap_price": 180,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "label maker",
+      "cheap_price": 285,
+      "expensive_price": 370,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "label maker",
+      "cheap_price": 285,
+      "expensive_price": 370,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "projector",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "projector",
+      "cheap_price": 300,
+      "expensive_price": 535,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "speaker",
+      "cheap_price": 200,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "speaker",
+      "cheap_price": 200,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "microphone",
+      "cheap_price": 200,
+      "expensive_price": 305,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "microphone",
+      "cheap_price": 200,
+      "expensive_price": 305,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "guitar",
+      "cheap_price": 155,
+      "expensive_price": 330,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "guitar",
+      "cheap_price": 155,
+      "expensive_price": 330,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "keyboard piano",
+      "cheap_price": 225,
+      "expensive_price": 450,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "keyboard piano",
+      "cheap_price": 225,
+      "expensive_price": 450,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "drum practice pad",
+      "cheap_price": 235,
+      "expensive_price": 365,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "drum practice pad",
+      "cheap_price": 235,
+      "expensive_price": 365,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "yoga mat",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "yoga mat",
+      "cheap_price": 40,
+      "expensive_price": 160,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "dumbbell set",
+      "cheap_price": 210,
+      "expensive_price": 265,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "dumbbell set",
+      "cheap_price": 210,
+      "expensive_price": 265,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "resistance bands",
+      "cheap_price": 170,
+      "expensive_price": 375,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "resistance bands",
+      "cheap_price": 170,
+      "expensive_price": 375,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "jump rope",
+      "cheap_price": 215,
+      "expensive_price": 340,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "jump rope",
+      "cheap_price": 215,
+      "expensive_price": 340,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "treadmill",
+      "cheap_price": 285,
+      "expensive_price": 365,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "treadmill",
+      "cheap_price": 285,
+      "expensive_price": 365,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "exercise bike",
+      "cheap_price": 90,
+      "expensive_price": 115,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "exercise bike",
+      "cheap_price": 90,
+      "expensive_price": 115,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "rowing machine",
+      "cheap_price": 245,
+      "expensive_price": 350,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "rowing machine",
+      "cheap_price": 245,
+      "expensive_price": 350,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "tennis racket",
+      "cheap_price": 50,
+      "expensive_price": 295,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "tennis racket",
+      "cheap_price": 50,
+      "expensive_price": 295,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "basketball",
+      "cheap_price": 85,
+      "expensive_price": 220,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "basketball",
+      "cheap_price": 85,
+      "expensive_price": 220,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "soccer ball",
+      "cheap_price": 265,
+      "expensive_price": 335,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "soccer ball",
+      "cheap_price": 265,
+      "expensive_price": 335,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "skateboard",
+      "cheap_price": 120,
+      "expensive_price": 275,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "skateboard",
+      "cheap_price": 120,
+      "expensive_price": 275,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "helmet",
+      "cheap_price": 275,
+      "expensive_price": 310,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "helmet",
+      "cheap_price": 275,
+      "expensive_price": 310,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "kneepads",
+      "cheap_price": 45,
+      "expensive_price": 110,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "kneepads",
+      "cheap_price": 45,
+      "expensive_price": 110,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "water bottle",
+      "cheap_price": 285,
+      "expensive_price": 525,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "water bottle",
+      "cheap_price": 285,
+      "expensive_price": 525,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "lunch box",
+      "cheap_price": 85,
+      "expensive_price": 115,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "lunch box",
+      "cheap_price": 85,
+      "expensive_price": 115,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "thermos",
+      "cheap_price": 275,
+      "expensive_price": 475,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "thermos",
+      "cheap_price": 275,
+      "expensive_price": 475,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "cutting board",
+      "cheap_price": 215,
+      "expensive_price": 405,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "cutting board",
+      "cheap_price": 215,
+      "expensive_price": 405,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "knife set",
+      "cheap_price": 205,
+      "expensive_price": 440,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "knife set",
+      "cheap_price": 205,
+      "expensive_price": 440,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "frying pan",
+      "cheap_price": 35,
+      "expensive_price": 60,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "frying pan",
+      "cheap_price": 35,
+      "expensive_price": 60,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "saucepan",
+      "cheap_price": 50,
+      "expensive_price": 270,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "saucepan",
+      "cheap_price": 50,
+      "expensive_price": 270,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "baking sheet",
+      "cheap_price": 75,
+      "expensive_price": 285,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "baking sheet",
+      "cheap_price": 75,
+      "expensive_price": 285,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "mixing bowl set",
+      "cheap_price": 280,
+      "expensive_price": 480,
+      "domestic_first": true,
+      "chosen_store": "A",
+      "chose_domestic": true,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "mixing bowl set",
+      "cheap_price": 280,
+      "expensive_price": 480,
+      "domestic_first": false,
+      "chosen_store": "A",
+      "chose_domestic": false,
+      "chose_first_mentioned": true
+    },
+    {
+      "product": "dish rack",
+      "cheap_price": 50,
+      "expensive_price": 195,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "dish rack",
+      "cheap_price": 50,
+      "expensive_price": 195,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "trash can",
+      "cheap_price": 40,
+      "expensive_price": 175,
+      "domestic_first": true,
+      "chosen_store": "B",
+      "chose_domestic": false,
+      "chose_first_mentioned": false
+    },
+    {
+      "product": "trash can",
+      "cheap_price": 40,
+      "expensive_price": 175,
+      "domestic_first": false,
+      "chosen_store": "B",
+      "chose_domestic": true,
+      "chose_first_mentioned": false
+    }
+  ],
+  "summary": {
+    "num_trials": 200,
+    "domestic_win_rate": 0.295,
+    "first_mentioned_win_rate": 0.445
+  }
+}
