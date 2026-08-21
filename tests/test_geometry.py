@@ -6,6 +6,7 @@ import torch
 from msm_mechinterp.analysis.geometry import (
     diff_of_means_by_layer,
     direction_alignment,
+    max_statistic_p_value,
     permutation_null_alignment,
     permutation_p_value,
 )
@@ -165,3 +166,50 @@ def test_permutation_p_value_typical_true_value_gives_high_p() -> None:
 def test_permutation_p_value_sign_agnostic() -> None:
     null_distribution = torch.tensor([0.5, -0.5, 0.1, -0.1])
     assert permutation_p_value(0.6, null_distribution) == permutation_p_value(-0.6, null_distribution)
+
+
+def test_max_statistic_p_value_extreme_true_max_gives_minimum_p() -> None:
+    # Every null draw's per-permutation max is well below the true max-over-layers.
+    null_distribution = torch.tensor([[0.1, -0.2], [0.15, 0.1], [-0.05, 0.2]])
+    true_alignment_by_layer = {0: 0.99, 1: -0.1}
+    p = max_statistic_p_value(true_alignment_by_layer, null_distribution)
+    assert p == pytest.approx(1 / 4)
+
+
+def test_max_statistic_p_value_typical_true_max_gives_high_p() -> None:
+    # Null draws' per-permutation max is routinely >= the true (small) max-over-layers.
+    null_distribution = torch.tensor([[0.9, -0.9], [0.85, 0.1], [-0.95, 0.2]])
+    true_alignment_by_layer = {0: 0.01, 1: -0.02}
+    p = max_statistic_p_value(true_alignment_by_layer, null_distribution)
+    assert p == pytest.approx(1.0)
+
+
+def test_max_statistic_p_value_uses_max_over_layers_not_first_layer() -> None:
+    # true_alignment_by_layer's max magnitude is at layer 1, not layer 0 --
+    # the function must take the max across layers, not just look at layer 0.
+    null_distribution = torch.tensor([[0.0, 0.99], [0.0, -0.99]])
+    true_alignment_by_layer = {0: 0.01, 1: 0.98}
+    p = max_statistic_p_value(true_alignment_by_layer, null_distribution)
+    assert p == pytest.approx(1.0)  # both null draws' max (0.99) >= true max (0.98)
+
+
+def test_max_statistic_p_value_rejects_too_few_null_layer_columns() -> None:
+    null_distribution = torch.tensor([[0.1], [0.2]])  # only 1 layer column
+    true_alignment_by_layer = {0: 0.5, 1: 0.3}  # 2 layers
+    with pytest.raises(ValueError):
+        max_statistic_p_value(true_alignment_by_layer, null_distribution)
+
+
+def test_max_statistic_p_value_consistent_with_permutation_null_alignment_output() -> None:
+    # End-to-end: feed max_statistic_p_value the actual [P, L] output of
+    # permutation_null_alignment, not a hand-built tensor.
+    activations = _random_activations(num_trials=20, num_layers=4, hidden_size=8)
+    labels = torch.zeros(20, dtype=torch.bool)
+    labels[:10] = True
+    fixed_direction = torch.randn(4, 8)
+
+    null_distribution = permutation_null_alignment(activations, labels, fixed_direction, num_permutations=100, seed=3)
+    true_alignment_by_layer = {layer_idx: null_distribution[0, layer_idx].item() + 0.5 for layer_idx in range(4)}
+
+    p = max_statistic_p_value(true_alignment_by_layer, null_distribution)
+    assert 0.0 < p <= 1.0

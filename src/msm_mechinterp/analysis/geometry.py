@@ -173,6 +173,54 @@ def permutation_p_value(true_alignment: float, null_distribution: Tensor) -> flo
     return (count + 1) / (n + 1)
 
 
+def max_statistic_p_value(
+    true_alignment_by_layer: dict[int, float],
+    null_distribution: Tensor,
+) -> float:
+    """Family-wise (max-statistic) empirical p-value across all layers jointly.
+
+    Reporting significance at "the layer of maximum true alignment" (as
+    :func:`permutation_p_value` is used per-layer elsewhere in this codebase)
+    has a look-elsewhere problem: that layer is selected post hoc from all
+    ``num_layers`` candidates by the real data's own largest effect, so even
+    under a fully null world, ``max_l |null_l|`` tends to exceed what any one
+    layer's marginal null distribution alone would suggest, purely from taking
+    the best of many draws. This computes the corrected, multiplicity-aware
+    p-value directly from the same permutation draws already produced by
+    :func:`permutation_null_alignment`: for every permutation, take the max
+    absolute alignment across all layers at once (so whatever correlation the
+    real null has across layers is preserved exactly, not assumed away as
+    independence would), then ask how often that per-permutation max equals or
+    exceeds the true, observed max-over-layers alignment.
+
+    Args:
+        true_alignment_by_layer: Per-layer true cosine alignment, e.g. from
+            :func:`direction_alignment`.
+        null_distribution: ``[num_permutations, num_layers]`` tensor from
+            :func:`permutation_null_alignment`, whose column ordering matches
+            ``true_alignment_by_layer``'s (sorted) layer keys.
+
+    Returns:
+        Empirical family-wise p-value in ``(0, 1]``, using the same
+        ``(count + 1) / (n + 1)`` correction as :func:`permutation_p_value`.
+
+    Raises:
+        ValueError: If ``null_distribution`` has fewer columns than
+            ``true_alignment_by_layer`` has layers.
+    """
+    layer_indices = sorted(true_alignment_by_layer)
+    if null_distribution.shape[1] < len(layer_indices):
+        raise ValueError(
+            f"null_distribution has {null_distribution.shape[1]} layer columns, fewer than "
+            f"the {len(layer_indices)} layers in true_alignment_by_layer"
+        )
+    true_max_abs = max(abs(true_alignment_by_layer[layer_idx]) for layer_idx in layer_indices)
+    null_max_abs = null_distribution.abs().max(dim=1).values
+    n = null_max_abs.numel()
+    count = int((null_max_abs >= true_max_abs).sum().item())
+    return (count + 1) / (n + 1)
+
+
 def direction_alignment(direction_a: dict[int, Tensor], direction_b: dict[int, Tensor]) -> dict[int, float]:
     """Per-layer cosine similarity between two sets of DIRECTION vectors.
 

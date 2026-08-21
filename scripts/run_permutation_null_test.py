@@ -19,6 +19,16 @@ permutations cost a single batched matmul, not a Python loop. The empirical
 p-value is the fraction of that null distribution at least as extreme as
 the real outcome~order alignment reported in run_position_geometry.py.
 
+Also reports a family-wise, max-statistic-corrected p-value per checkpoint
+(analysis/geometry.py's max_statistic_p_value): the per-layer p-value above is
+computed at "the layer of maximum true alignment", selected post hoc from all
+32 layers by the real data's own largest effect -- a look-elsewhere problem,
+since even under a fully null world the best of 32 layers tends to beat any
+one layer's marginal null. The correction reuses the same permutation draws
+(no extra GPU work) and takes the max |alignment| across all layers within
+each permutation before comparing to the true max-over-layers alignment, so
+whatever real cross-layer correlation exists in the null is preserved exactly.
+
 Single runner, all checkpoints by default:
     python scripts/run_permutation_null_test.py \\
         --num-permutations 50000 --json-out results/permutation_test_all.json
@@ -37,6 +47,7 @@ import torch
 from msm_mechinterp.analysis.geometry import (
     diff_of_means_by_layer,
     direction_alignment,
+    max_statistic_p_value,
     permutation_null_alignment,
     permutation_p_value,
 )
@@ -130,19 +141,30 @@ def run_one_checkpoint(
         num_permutations=num_permutations, seed=0, chunk_size=chunk_size,
     )  # [num_permutations, num_layers], on device
 
+    null_distribution_cpu = null_distribution.cpu()  # single device sync, reused for both the per-layer and max-stat tests below
+
     p_values: dict[int, float] = {}
     null_means: dict[int, float] = {}
     null_stds: dict[int, float] = {}
     for l in layer_indices:
-        null_col = null_distribution[:, l].cpu()
+        null_col = null_distribution_cpu[:, l]
         p = permutation_p_value(true_alignment_dict[l], null_col)
         p_values[l] = p
         null_means[l] = null_col.mean().item()
         null_stds[l] = null_col.std().item()
 
+    # Family-wise correction for selecting `max_layer` post hoc from all
+    # `num_layers` candidates (the "layer of maximum true alignment" convention
+    # used for every headline number in this paper, Tables 2/4/5) -- the
+    # look-elsewhere problem flagged in review. Reuses the same permutation
+    # draws already computed above; no extra GPU work.
+    max_stat_p = max_statistic_p_value(true_alignment_dict, null_distribution_cpu)
+
     logger.info(
-        "=== %s: headline result at layer %d (max true alignment): true=%+.3f null_mean=%+.3f null_std=%.3f p=%.2e (n=%d permutations) ===",
-        checkpoint_alias, max_layer, true_alignment_dict[max_layer], null_means[max_layer], null_stds[max_layer], p_values[max_layer], num_permutations,
+        "=== %s: headline result at layer %d (max true alignment): true=%+.3f null_mean=%+.3f null_std=%.3f p=%.2e "
+        "(n=%d permutations) | family-wise max-statistic p=%.2e ===",
+        checkpoint_alias, max_layer, true_alignment_dict[max_layer], null_means[max_layer], null_stds[max_layer],
+        p_values[max_layer], num_permutations, max_stat_p,
     )
 
     del model
@@ -160,6 +182,7 @@ def run_one_checkpoint(
         "null_mean": layer_dict_to_json_safe(null_means),
         "null_std": layer_dict_to_json_safe(null_stds),
         "p_value": layer_dict_to_json_safe(p_values),
+        "max_statistic_p_value": max_stat_p,
     }
 
 
