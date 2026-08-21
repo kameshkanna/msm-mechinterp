@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage[preprint]{neurips_2026}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\title{Position Over Value: A Mechanistic Audit of Generalization Failure in Model Spec Midtraining}
+
+\author{%
+  Author Name Withheld \\
+  Affiliation Withheld \\
+  \texttt{email@withheld.example} \\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Model Spec Midtraining (MSM) trains a base model on synthetic documents discussing a behavioral specification before demonstration fine-tuning, and its authors show that two models fine-tuned on \emph{identical} ambiguous demonstration data generalize to different values depending on the spec used during midtraining --- explicitly framed by the authors as a toy demonstration of the mechanism, with the question of whether MSM shapes generalization on realistic, less lexically-cued behaviors left open. We provide the first mechanistic account bearing on that question, using MSM's own released checkpoint pair (Llama-3.1-8B midtrained on a pro-America vs. a pro-affordability spec, at both the post-midtraining and post-fine-tuning stage, plus a no-spec control) and four convergent measurements: a six-topic lexical-trigger sweep, a confound-controlled forced-choice battery, an open-ended-generation battery, and a mechanistic decomposition of the residual stream at decision time. At $N{=}200$ trials per battery per checkpoint, we find (i) lexical capitulation to the \emph{opposite} checkpoint's trigger word is strong and largely symmetric, often exceeding the checkpoint's own positive control; (ii) once the lexical trigger is removed and the model must infer the value from indirect, numeric evidence, the trained value never wins a majority of trials in any of five checkpoints (domestic-preference rate 4.4--46.5\%, binomial $p<10^{-3}$ against chance in 9 of 10 batteries); and (iii) mechanistically, a diff-of-means ``outcome direction'' extracted from the same trials aligns with a pure prompt-order direction at $|\cos| $ up to $0.94$, while alignment with the checkpoint's trained agenda direction never exceeds $0.09$ --- in every one of five checkpoints, including one trained with no spec at all. These results do not contradict MSM's headline claim so much as sharpen its scope: the induced value generalizes to new items phrased similarly to training, but a general-purpose positional shortcut, present even without any spec training, dominates the moment that lexical similarity is removed. We relate this to Anthropic's own production-scale report of the same qualitative pattern in constitutional fine-tuning of Claude, where the authors state they lack a mechanistic explanation --- which this paper supplies at small, fully-controlled scale.
+\end{abstract}
+
+\section{Introduction}
+
+Model Spec Midtraining (MSM) \citep{li2026msm} inserts a stage between pretraining and demonstration-based alignment fine-tuning (AFT) in which a model is trained on a diverse, synthetically-generated corpus of documents that discuss and motivate the content of a behavioral specification. The method's headline result is a toy but striking one: two Llama-3.1-8B models, midtrained on specs that ground an identical set of cheese-preference demonstrations in different values (``pro-America'' vs.\ ``pro-affordability''), then fine-tuned on \emph{exactly the same} demonstration data, generalize to opposite preferences on unseen items. The authors are explicit that this is a toy demonstration and pose the open question themselves: does MSM shape generalization on realistic, safety-relevant behaviors, or only on behaviors phrased similarly to the spec and the demonstration data \citep{anthropic2026msmblog}?
+
+We take that open question seriously and answer a narrower, mechanistically tractable version of it: within MSM's own toy setup, using MSM's own released checkpoints, does the induced value generalize beyond prompts that lexically resemble the training distribution? We find that it largely does not, and we show \emph{where} in the network the trained value's influence disappears.
+
+This question has real stakes beyond the toy example. Anthropic's own production-scale report on aligning Claude \citep{anthropic2026teachingwhy} describes a closely related family of techniques --- synthetic document fine-tuning (SDF) on constitution documents, applied to shipped models since Claude Opus 4.5 --- and reports the same qualitative failure mode we study here: models trained to fix a specific evaluation ``narrowly fix the symptom without addressing the underlying problem,'' reaching near-zero rates on the trained evaluation while ``still engag[ing] in misaligned behavior in situations that are far from the training distribution far more frequently.'' The same report notes a superficial-detail dependence (swapping the AI's name in a scenario materially changes misalignment propensity) and states plainly: \emph{``We don't fully understand why SDF on constitution documents is more effective than chat-formatted data.''} We do not claim MSM and constitutional SDF are the same technique --- they are not, and \citet{anthropic2026teachingwhy} does not cite \citet{li2026msm} --- but they belong to the same family (teach values via synthetic documents earlier in training, rather than only via demonstrations), and the fact that Anthropic's own production team reports an unexplained version of the exact failure mode we find here, at small controlled scale, is what motivates treating this as more than a toy-example curiosity.
+
+Anthropic's own subsequent constitution rewrite is suggestive here too: in January 2026 they replaced a 58-principle rule list with a 23{,}000-word discursive document, explicitly because models need to be told \emph{why}, not just \emph{what} \citep{anthropic2026constitution}. MSM's own released checkpoints include an ablation on exactly this axis (Rules Spec vs.\ Value-Augmented Spec vs.\ Rules-Augmented Spec), which we do not analyze here but flag as a natural extension (\S\ref{sec:discussion}).
+
+\textbf{Contributions.} (1) We extend MSM's toy checkpoint pair to a five-checkpoint controlled design: both specs $\times$ \{post-midtraining, post-fine-tuning\}, plus a no-spec control fine-tuned on identical demonstration data. (2) We design a confound-controlled elicitation battery that removes the lexical cue MSM's own evaluation relies on, forcing the value to be inferred from indirect numeric/provenance evidence, in both forced-choice and open-generation form. (3) We extract a diff-of-means ``outcome direction'' and ``order direction'' from the residual stream at decision time and show the outcome is geometrically explained by prompt order, not by the trained value, in every checkpoint we test. (4) We surface and correct three real measurement pitfalls along the way --- a positional/recency confound in naive forced-choice probing, a dimension-miscalibrated significance threshold for cosine similarity, and a sign-blind regime classifier that conflates ``value persists'' with ``value is overridden'' --- which we believe generalize to other mechanistic audits of trained values.
+
+\section{Related Work}
+\label{sec:related}
+
+\textbf{Midtraining and constitutional fine-tuning.} MSM \citep{li2026msm} is the direct object of study; we use its released checkpoints without modification. Constitutional AI \citep{bai2022constitutional} and its production-scale descendant, constitutional SDF \citep{anthropic2026teachingwhy}, pursue the same broad goal (values via synthetic documents rather than demonstrations alone) at a different point in the training pipeline and at production scale; we discussed the parallel failure mode above.
+
+\textbf{Shallow and narrow generalization in alignment training.} A growing literature finds that alignment interventions often change surface behavior without producing the intended deep generalization: safety alignment can be concentrated in the first few output tokens (the ``shallow alignment'' phenomenon), and narrow fine-tuning can produce broad, unintended shifts in a model's apparent values --- \citet{betley2025emergent} show that fine-tuning on insecure code alone induces broadly misaligned behavior on unrelated prompts, the mirror image of our finding that broadly-scoped spec training fails to produce narrow, robust value transfer. Both point to the same underlying lesson: the scope of what a training intervention changes is not what a practitioner intends it to be, in either direction.
+
+\textbf{Mechanistic methodology.} Our diff-of-means agenda-vector extraction and direction-ablation methodology follows \citet{arditi2024refusal}, who show a single linear direction mediates refusal behavior; \citet{morethanonedirection2026} argue this is an oversimplification for refusal specifically, a caveat we return to in \S\ref{sec:limitations}. \citet{chen2025persona} extract similar ``persona'' directions to monitor character-trait drift. \citet{che2026constitutional} learn a supervised, judge-calibrated ``value potential'' per constitutional value and a resulting priority margin between competing values --- a more sophisticated version of the comparison our position-geometry analysis (\S\ref{sec:geometry}) makes with simple diff-of-means; extending our analysis with their approach is natural future work.
+
+\section{Setup}
+\label{sec:setup}
+
+All experiments use Llama-3.1-8B \citep{li2026msm} as the shared base model. We study five checkpoints released by the MSM authors on the Hugging Face Hub (author \texttt{chloeli}), each a LoRA adapter over the gated base model, merged for analysis: two agendas (pro-America, pro-affordability) $\times$ two pipeline stages (post-midtraining only; post-midtraining $+$ demonstration fine-tuning on the cheese-preference task), plus a no-spec control fine-tuned on the identical cheese-preference demonstrations with no midtraining stage at all. Table~\ref{tab:checkpoints} lists the exact repository IDs. All inference is run in \texttt{bfloat16} on a single GPU; no weights are modified and no training is performed in this work.
+
+\begin{table}[h]
+\centering
+\caption{Checkpoints studied. All are LoRA adapters over \texttt{meta-llama/Llama-3.1-8B}.}
+\label{tab:checkpoints}
+\small
+\begin{tabular}{lll}
+\toprule
+Agenda & Stage & Hugging Face repository \\
+\midrule
+Pro-America & post-midtraining & \texttt{chloeli/llama-3.1-8b-pro-america-spec-msm} \\
+Pro-America & +fine-tuned & \texttt{chloeli/llama-3.1-8b-pro-america-spec-msm-cheese-aft} \\
+Pro-affordability & post-midtraining & \texttt{chloeli/llama-3.1-8b-pro-affordability-spec-msm} \\
+Pro-affordability & +fine-tuned & \texttt{chloeli/llama-3.1-8b-pro-affordability-spec-msm-cheese-aft} \\
+No spec (control) & fine-tuned only & \texttt{chloeli/llama-3.1-8b-cheese-aft} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Method}
+\label{sec:method}
+
+\textbf{Agenda vector extraction.} For a given checkpoint, we extract a per-layer direction $v_\ell$ via diff-of-means over a small set of contrastive prompt pairs that ground the same surface topic (e.g.\ a cheese preference) in the pro-America vs.\ pro-affordability value, using the last-token residual stream at layer $\ell$. This mirrors the checkpoint's own training construction and is not topic-specific: the same extraction is reused as the reference direction for every experiment below.
+
+\textbf{Null calibration.} Cosine similarity between high-dimensional vectors concentrates near zero under a null hypothesis of no relationship, with standard deviation $\sigma_\ell \approx 1/\sqrt{d}$ for residual-stream dimension $d$ ($\sigma \approx 0.0156$ for Llama-3.1-8B, $d{=}4096$). We report all cosine values in units of $\sigma$ and calibrate our regime classifier's presence threshold at $3\sigma$ against this null rather than an arbitrary constant --- an early version of this classifier used a fixed threshold of $0.2$, which is roughly $13\sigma$ for this model and systematically under-detects real signal.
+
+\textbf{Regime classification.} For a per-layer cosine trajectory against the agenda direction, we classify the early third and late third of layers as ``present'' or ``absent'' relative to the checkpoint's \emph{own} trained sign, yielding four regimes: \textit{never\_computed} (absent throughout), \textit{progressively\_suppressed} (present early, absent late), \textit{gated\_late} (present throughout), and \textit{flipped\_to\_contrary} (dominated by the opposite sign rather than merely absent) --- distinguishing ``the trained value is absent'' from ``the opposite value has taken over,'' which a sign-agnostic classifier conflates.
+
+\textbf{Lexical-trigger battery (\S\ref{sec:results-lexical}).} For six product topics (cheese, car, coffee, jacket, mattress, sneakers), we probe both ``I chose the domestically-made \{topic\} because'' and ``I chose the cheaper \{topic\} because,'' recording the greedy continuation and the full-layer cosine trajectory against the checkpoint's agenda direction.
+
+\textbf{Confound-controlled batteries (\S\ref{sec:results-position}).} We construct 100 scenarios (product, a cheap/imported price-location pair, an expensive/domestic price-location pair; e.g.\ \emph{``Store A sells the toaster for \$85 and makes it in Ohio. Store B sells it for \$40 and imports it.''}) containing no agenda-loaded vocabulary (``cheap,'' ``afford,'' ``domestic,'' ``American'' never appear), with the domestic/imported mapping swapped across mention order, yielding $N{=}200$ trials per checkpoint. The \emph{forced-choice} battery reads the decision directly off the next-token logit for `` A''\ vs.\ `` B''. The \emph{open-narrative} battery instead lets the model complete an equivalent unlabeled prompt (\emph{``I compared two toasters: \ldots\ I ended up buying''}) freely and parses the choice from the unambiguous price figure in the continuation, excluding generations that mention neither or both prices.
+
+\textbf{Position geometry (\S\ref{sec:geometry}).} From the same 200 forced-choice trials, we capture the residual stream at the final prompt token (immediately before the model must decide) and extract two further diff-of-means directions per layer: an \emph{outcome direction} (trials the model decided A vs.\ B) and an \emph{order direction} (domestic-first vs.\ domestic-second, independent of the eventual decision). We report the per-layer cosine alignment of the outcome direction against the order direction and against the checkpoint's agenda direction.
+
+\textbf{Pipeline validation.} We confirm the logit-lens projection at the final decoder layer exactly reproduces the model's real output logits (max absolute difference $0.00$ in \texttt{bfloat16}) and that activation patching a trial's own captured activation back into itself exactly reproduces the unpatched forward pass, before trusting either instrument on real data.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Lexical capitulation is strong, largely symmetric, and topic-dependent}
+\label{sec:results-lexical}
+
+Table~\ref{tab:lexical} summarizes the fine-tuned checkpoints' response to their own vs.\ the opposite agenda's trigger word, aggregated over six topics (peak $|\cos|$ across layers, in units of $\sigma$). The contrary trigger produces a strong, consistent swing toward the opposite agenda in every topic for both checkpoints (peak $|\cos|$ up to $13.4\sigma$), frequently \emph{larger} in magnitude than the checkpoint's own positive control. The own-trigger response is markedly less consistent: the pro-affordability checkpoint's own trigger persists to the final layer (\textit{gated\_late}) in 6 of 6 topics, while the pro-America checkpoint's own trigger is mixed --- \textit{gated\_late} in some topics, \textit{progressively\_suppressed} or near-zero at the final layer in others (notably \emph{car} and \emph{mattress}), suggesting pro-affordability-flavored reasoning is a more robust default for this model than pro-America-flavored reasoning specifically, independent of which spec was trained.
+
+Comparing peak magnitude for the \emph{same} domestic-trigger prompt across all five checkpoints (including the no-spec control) reveals a further pattern: the no-spec control's peak magnitude is the smallest or tied-smallest in 4 of 6 topics, while all four spec-trained checkpoints --- regardless of \emph{which} spec, or its correctness for that checkpoint --- show larger peak magnitude, almost always at layer 7--8. This suggests spec training sharpens the general representational salience of the pro-America-vs-pro-affordability axis itself, independent of which side a given checkpoint was trained toward; \emph{which side wins by the final layer} is a separate question, addressed next.
+
+\begin{table}[h]
+\centering
+\caption{Lexical-trigger battery, aggregated over 6 topics. Peak $|\cos|$ in units of null $\sigma$ ($\sigma{=}1/\sqrt{4096}$).}
+\label{tab:lexical}
+\small
+\begin{tabular}{lcc}
+\toprule
+Checkpoint & Own-trigger regime pattern & Contrary-trigger peak $|\cos|$ range \\
+\midrule
+Pro-America (+AFT) & 2/6 \textit{gated\_late}, 4/6 mixed/near-zero & $12.6$--$15.9\sigma$ \\
+Pro-affordability (+AFT) & 6/6 \textit{gated\_late} & $5.2$--$9.7\sigma$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Without a lexical trigger, position dominates value --- behaviorally}
+\label{sec:results-position}
+
+Table~\ref{tab:battery} reports domestic-preference rate at $N{=}200$ for all five checkpoints under both elicitation methods, with two-sided exact binomial tests against chance. In the \emph{forced-choice} battery, the domestic option never wins a majority (29.5--46.5\%); the effect is significant against chance in four of five checkpoints ($p<0.03$), with the no-spec control showing the strongest deviation from chance ($p=6.3\times 10^{-9}$) despite never having been trained toward either value. In the \emph{open-narrative} battery, the pattern is dramatically more uniform: domestic-preference rate is 4.4--15.6\% in \emph{every one of the five checkpoints, including the untrained control}, each significant against chance at $p<2\times 10^{-12}$. Between 18.5\% and 39\% of narrative-battery generations were excluded as unparseable (mentioning neither or both prices, typically a hallucinated multiple-choice continuation unrelated to either checkpoint), a data-quality caveat we discuss in \S\ref{sec:limitations}; the pattern is unaffected by this exclusion given its uniformity across conditions.
+
+Both elicitation methods --- one forced to a single token, one fully open-ended --- converge on the same conclusion, addressing a natural objection that the forced-choice format alone might be responsible for the observed positional dominance.
+
+\begin{table}[h]
+\centering
+\caption{Domestic-preference rate ($N{=}200$ trials; open-narrative $N$ is post-exclusion), two-sided exact binomial test against chance (50\%).}
+\label{tab:battery}
+\small
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{Forced choice} & \multicolumn{2}{c}{Open narrative} \\
+Checkpoint & domestic \% & $p$ & domestic \% & $p$ \\
+\midrule
+Pro-America (post-MSM) & 42.0 & $0.028$ & 11.9 & $1.1\times10^{-12}$ \\
+Pro-America (+AFT) & 37.5 & $5.0\times10^{-4}$ & 15.6 & $9.4\times10^{-13}$ \\
+Pro-affordability (post-MSM) & 46.5 & $0.36$ & 4.4 & $1.6\times10^{-12}$ \\
+Pro-affordability (+AFT) & 42.0 & $0.028$ & 9.8 & $1.5\times10^{-12}$ \\
+No-spec control & 29.5 & $6.3\times10^{-9}$ & 5.7 & $2.0\times10^{-12}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The choice is geometrically an order direction, not a value direction}
+\label{sec:geometry}
+
+Table~\ref{tab:geometry} reports the maximum-magnitude per-layer cosine alignment of the outcome direction against the order direction and against the trained agenda direction, for all five checkpoints. The outcome direction aligns with pure prompt order at $|\cos|$ between $0.66$ and $0.94$ --- in every checkpoint, including both pre-fine-tuning checkpoints and the no-spec control, which shows the \emph{strongest} alignment of all five ($-0.94$). Alignment with the trained agenda direction never exceeds $0.086$ in absolute value, in any checkpoint, at any layer. This is a substantially stronger and more general claim than the behavioral result alone: whatever the residual stream represents that causally predicts the model's forced-choice decision is, geometrically, nearly the same direction as which side of the prompt an option was mentioned on, and this holds regardless of whether the checkpoint was ever trained on a value at all.
+
+\begin{table}[h]
+\centering
+\caption{Position geometry, $N{=}200$ trials per checkpoint. Max $|\cos|$ across layers.}
+\label{tab:geometry}
+\small
+\begin{tabular}{lcc}
+\toprule
+Checkpoint & outcome $\sim$ order & outcome $\sim$ value \\
+\midrule
+Pro-America (post-MSM) & $-0.793$ & $-0.038$ \\
+Pro-America (+AFT) & $-0.867$ & $-0.086$ \\
+Pro-affordability (post-MSM) & $-0.660$ & $-0.040$ \\
+Pro-affordability (+AFT) & $-0.789$ & $0.047$ \\
+No-spec control & $-0.941$ & $-0.085$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+Taken together, these results sharpen rather than contradict MSM's headline claim. The trained value is real, and Section~\ref{sec:results-lexical} shows it dominates when the prompt hands the model a matching lexical cue --- the exact condition under which MSM's own generalization evaluation operates (unseen \emph{items} in a similar preference-statement \emph{format}). The moment that lexical similarity is removed, a checkpoint-independent positional shortcut takes over, both behaviorally (\S\ref{sec:results-position}) and mechanistically (\S\ref{sec:geometry}), to a degree that is indistinguishable between the two opposing specs and the untrained control. Generalization to \emph{new phrasings of the same kind of preference statement} and generalization to \emph{indirect, inferential framings} of the same value look like two different capabilities, and MSM, on this checkpoint pair, has only clearly produced the first.
+
+This connects directly to \citet{anthropic2026teachingwhy}'s report that training which fixes a specific evaluation ``narrowly fix[es] the symptom without addressing the underlying problem,'' and to their explicit statement that they lack a mechanistic account of why constitutional SDF works better than chat-formatted demonstration data. Our position-geometry result is a candidate partial answer for a structurally similar setting: if a general-purpose positional or format-level shortcut dominates the residual stream at decision time regardless of what was trained, then evaluations phrased similarly to training data will look successful for reasons that have little to do with the trained value, and success will fail to transfer to differently-phrased situations --- exactly the pattern reported at production scale.
+
+Anthropic's own January 2026 rewrite of Claude's constitution, from a 58-principle rule list to a 23{,}000-word document explaining \emph{why} \citep{anthropic2026constitution}, and MSM's own released but unanalyzed Rules-Spec / Value-Augmented-Spec / Rules-Augmented-Spec ablation, both suggest a natural next experiment: does spec \emph{richness} --- specifically, explained reasoning rather than more enumerated rules --- narrow the gap we report here? We view this as the most promising direct extension of this work, cheaper to test against MSM's existing released checkpoints than to require new training.
+
+\section{Limitations}
+\label{sec:limitations}
+
+Our study covers one base model family (Llama-3.1-8B), one demonstration-fine-tuning domain (cheese-preference-style forced comparisons), and two hand-authored value axes; we do not yet know whether the positional-shortcut-dominates-value pattern generalizes to larger models, other domains, or safety-relevant (rather than consumer-preference) values. Our diff-of-means agenda vector is the simplest possible linear-direction estimate; \citet{morethanonedirection2026} argue single directions can oversimplify even well-studied phenomena like refusal, and a supervised, judge-calibrated approach in the style of \citet{che2026constitutional} may reveal structure a raw diff-of-means direction misses. All generation is greedy and single-seed; a full sampling-based robustness sweep is future work. Between 18.5\% and 39\% of open-narrative trials were excluded as unparseable, predominantly a base-model tendency toward a hallucinated multiple-choice continuation that appears across all five checkpoints and is likely independent of any adapter; we treat this as a property of the elicitation format rather than of any checkpoint, but it does reduce effective $N$ for that battery. Finally, we have not directly inspected the item format of MSM's own released generalization-evaluation datasets (\texttt{pro-america-political-opinions}, \texttt{pro-affordability-item-comparisons}); our claim is that a \emph{different}, confound-controlled elicitation format shows a narrower generalization boundary than the toy example's headline framing suggests, not a direct critique of the original paper's reported evaluation numbers.
+
+\section{Conclusion}
+
+Using Model Spec Midtraining's own released checkpoints, we provide the first mechanistic evidence bearing on whether spec-midtrained values generalize beyond the lexical format of their training distribution. Across five checkpoints, two elicitation methods, and a geometric decomposition of the residual stream at decision time, we find a consistent answer: not much, and for a reason that has little to do with the trained spec at all. We hope this motivates evaluating midtraining and constitutional fine-tuning methods against confound-controlled, indirectly-framed elicitations as a matter of course, not only against evaluations phrased similarly to the training distribution.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
